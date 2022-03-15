@@ -127,17 +127,7 @@ class PostsController extends Controller
                 // On enregistre
                 $post->create();
                 //save picture
-                if (isset($_FILES['img']) && $_FILES['img']['error'] == 0) {
-                    if ($_FILES['img']['size'] <= 2000000) {
-                        $fileInfo = pathinfo($_FILES['img']['name']);
-                        $extension = $fileInfo['extension'];
-                        $allowedExtensions = ['jpg', 'jpeg', 'gif', 'png'];
-                        if (in_array($extension, $allowedExtensions)) {
-                            move_uploaded_file($_FILES['img']['tmp_name'], '' . $_SERVER['DOCUMENT_ROOT'] . '/poo/public/assets/upload/' . basename($_FILES['img']['name']));
-                            echo "Success !";
-                        }
-                    }
-                }
+                $this->saveImg($_FILES);
 
                 // On redirige
                 $_SESSION['message'] = "Your post has been successfully registered";
@@ -206,6 +196,9 @@ class PostsController extends Controller
                 // On met à jour l'post
                 $postUpdate->update();
 
+                //save picture
+                $this->saveImg($_FILES);
+
                 // On redirige
                 $_SESSION['message'] = "Your post has been successfully edited";
                  header('Location: ../show/' . $post->id );
@@ -224,6 +217,21 @@ class PostsController extends Controller
             header('Location: users/login');
             exit;
 
+        }
+    }
+
+    public function saveImg($file) {
+        //save picture
+        if (isset($file['img']) && $file['img']['error'] == 0) {
+            if ($file['img']['size'] <= 2000000) {
+                $fileInfo = pathinfo($file['img']['name']);
+                $extension = $fileInfo['extension'];
+                $allowedExtensions = ['jpg', 'jpeg', 'gif', 'png'];
+                if (in_array($extension, $allowedExtensions)) {
+                    move_uploaded_file($file['img']['tmp_name'], '' . $_SERVER['DOCUMENT_ROOT'] . '/poo/public/assets/upload/' . basename($_FILES['img']['name']));
+                    echo "Success !";
+                }
+            }
         }
     }
 
