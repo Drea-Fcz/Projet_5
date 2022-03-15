@@ -37,6 +37,7 @@ class PostsController extends Controller
 
         // On va chercher 1 post
         $post = $postsModel->find($id);
+        $idPost = intval($post->id);
 
         // On récupère les commentaires valides du post
         $commentsModel = new CommentsModel();
@@ -44,8 +45,9 @@ class PostsController extends Controller
         $comments = $commentsModel->findByPostId($id);
 
 
+
         // On envoie à la vue
-        $this->render('posts/show', ['post' => $post, 'comments' => $comments]);
+        $this->render('posts/show', ['post' => $post, 'comments' => $comments, 'idPost' => $idPost]);
 
     }
 
@@ -158,11 +160,15 @@ class PostsController extends Controller
         }
     }
 
+    /**
+     * @param int $id
+     * @return void
+     */
     public function edit(int $id)
     {
         // On vérifie si l'utilisateur est connecté
         if (isset($_SESSION['user']) && !empty($_SESSION['user']['id'])) {
-            // On va vérifier si l'annonce existe dans la base
+            // On va vérifier si l'post existe dans la base
             // On instancie notre modèle
             // On instancie le modèle
             $postsModel = new PostsModel();
@@ -170,21 +176,12 @@ class PostsController extends Controller
             // On va chercher 1 post
             $post = $postsModel->find($id);
 
-            // Si l'annonce n'existe pas, on retourne à la liste des annonces
+            // Si l'post n'existe pas, on retourne à la liste des posts
             if (!$post) {
                 http_response_code(404);
-                $_SESSION['erreur'] = "L'annonce recherchée n'existe pas";
-                header('Location: /annonces');
+                $_SESSION['erreur'] = "The post you are looking for does not exist";
+                header('Location: /posts');
                 exit;
-            }
-
-            // On vérifie si l'utilisateur est propriétaire de l'annonce ou admin
-            if ($post->users_id !== $_SESSION['user']['id']) {
-                if (!in_array('ROLE_ADMIN', $_SESSION['user']['roles'])) {
-                    $_SESSION['erreur'] = "Vous n'avez pas accès à cette page";
-                    header('Location: /annonces');
-                    exit;
-                }
             }
 
             // On traite le formulaire
@@ -193,25 +190,25 @@ class PostsController extends Controller
                 $chapo = strip_tags($_POST['chapo']);
                 $title = strip_tags($_POST['title']);
                 $body = strip_tags($_POST['body']);
-                $img = strip_tags($_FILES['img']['name']);
+                $img = strip_tags($_FILES['img']['name']) == '' ? $post->img : strip_tags($_FILES['img']['name']);
 
 
-                // On stocke l'annonce
+                // On stocke l'post
                 $postUpdate = new PostsModel();
 
                 // On hydrate
-                $postUpdate->setId($post->id)
+                $postUpdate->setId(intval($post->id))
                     ->setChapo($chapo)
                     ->setTitle($title)
                     ->setBody($body)
                     ->setImg($img);
 
-                // On met à jour l'annonce
+                // On met à jour l'post
                 $postUpdate->update();
 
                 // On redirige
                 $_SESSION['message'] = "Your post has been successfully edited";
-                header('Location: posts');
+                 header('Location: ../show/' . $post->id );
                 exit;
             }
 
@@ -223,7 +220,7 @@ class PostsController extends Controller
 
         } else {
             // L'utilisateur n'est pas connecté
-            $_SESSION['error'] = "Vous devez être connecté(e) pour accéder à cette page";
+            $_SESSION['error'] = "You must be logged in to access this page";
             header('Location: users/login');
             exit;
 

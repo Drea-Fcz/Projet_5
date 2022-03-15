@@ -4,13 +4,13 @@ namespace App\Models;
 
 class PostsModel extends Model
 {
-    protected int $id;
-    protected string $chapo;
-    protected string $title;
-    protected string $body;
-    protected string $img;
+    protected $id;
+    protected $chapo;
+    protected $title;
+    protected $body;
+    protected $img;
     protected $created_at;
-    protected int $user_id;
+    protected $user_id;
 
 
     public function __construct()
@@ -21,7 +21,7 @@ class PostsModel extends Model
     }
 
     /**
-     * @return mixed
+     * @return int
      */
     public function getId(): int
     {
@@ -38,9 +38,9 @@ class PostsModel extends Model
     }
 
     /**
-     * @return string
+     * @return mixed
      */
-    public function getChapo(): string
+    public function getChapo()
     {
         return $this->chapo;
     }

@@ -1,6 +1,6 @@
 <div class="d-flex justify-content-between m-3">
     <a href="<?= URL ?>/posts" class="btn color">&larr; Back</a>
-        <a href="<?= URL ?>/comments/show/<?= $post->id ?>" class="btn a-tag color">Validate Comments
+        <a href="<?= URL ?>/comments/show/<?= $idPost ?>" class="btn a-tag color">Validate Comments
             <span class="badge rounded-pill bg-light text-dark">2</span></a>
 </div>
 <div class="container text-white">
@@ -14,10 +14,10 @@
                     <h1><?= $post->title ?></h1>
 
                         <div class="d-flex flex-row">
-                            <a href="<?= URL ?>/posts/edit/"<?= $post->id ?> class="btn a-tag color">
+                            <a href="<?= URL ?>/posts/edit/<?= $idPost ?>" class="btn a-tag color">
                                 <i class="fa fa-pencil" aria-hidden="true"></i></a>
 
-                            <form action="<?= URL ?>/posts/delete/<?= $post->id ?>" method="POST">
+                            <form action="<?= URL ?>/posts/delete/<?= $idPost ?>" method="POST">
                                 <button type="submit" value="" class="btn red a-red-tag">
                                     <i class="fa fa-trash " aria-hidden="true"></i>
                                 </button>
