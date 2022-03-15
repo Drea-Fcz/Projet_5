@@ -9,6 +9,10 @@ body {
      font-family: 'Mukta', sans-serif;
 }
 
+.admin {
+     background-color: rgba(234, 233, 233, 0.8) !important;
+}
+
 .header {
      background-image: linear-gradient(rgba(31, 31, 31, 0.5), rgba(26, 26, 26, 0.5)), url("../img/developer-blog.jpg");
      background-size: cover;
