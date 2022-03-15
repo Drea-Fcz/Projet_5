@@ -1,0 +1,236 @@
+@import url('https://fonts.googleapis.com/css2?family=Mukta:wght@300;400;700&display=swap');
+
+html {
+     margin: 0;
+     padding: 0;
+}
+body {
+     background-color: #1c1c1c;
+     font-family: 'Mukta', sans-serif;
+}
+
+.header {
+     background-image: linear-gradient(rgba(31, 31, 31, 0.5), rgba(26, 26, 26, 0.5)), url("../img/developer-blog.jpg");
+     background-size: cover;
+     height: 100%;
+     padding-bottom: 7rem;
+}
+
+h2{
+     letter-spacing: .2rem;
+}
+.color {
+     color: #b79862;
+}
+.red {
+     color: #b76262;
+}
+
+.dot {
+     color: #b79862;
+     font-size: 3rem;
+}
+
+.btn-outline-success {
+     padding: .8rem;
+     color: #b79862;
+     background-color: transparent;
+     border: 1px solid #b79862;
+     letter-spacing: .1rem;
+     text-transform: uppercase;
+}
+.btn-outline-success:hover,
+.btn-outline-success:active,
+.btn-outline-success:focus,
+.btn-card:hover,
+.btn-card:active,
+.btn-card:focus {
+     background-color: #b79862;
+     border: none;
+}
+.btn:focus {
+     outline: none;
+     border: none;
+}
+.btn-outline-success:focus {
+     box-shadow: none;
+}
+
+.content {
+     color: white;
+     padding: 3.5rem 0;
+}
+
+.footer {
+     color: white;
+     padding: 2.8rem 0;
+}
+.footer-link {
+     color: #b79862;
+     text-decoration: none;
+     text-transform: uppercase;
+}
+
+.footer-link:hover {
+     color: #c4ac87;
+     text-decoration: none;
+     text-transform: uppercase;
+}
+
+/* ------------------- CARD ----------------- */
+
+.home-card {
+     background-color: #2f2f2f;
+}
+
+.shadow-box {
+     box-shadow: rgba(0, 0, 0, 0.24) 0px 3px 8px;
+}
+.fadeIn {
+     animation-name: fadeIn;
+     -webkit-animation-name: fadeIn;
+     animation-duration: 1.5s;
+     -webkit-animation-duration: 1.5s;
+     animation-timing-function: ease-in-out;
+     -webkit-animation-timing-function: ease-in-out;
+     visibility: visible !important;
+}
+
+@keyframes fadeIn {
+     0% {
+          opacity: 0.0;
+     }
+     100% {
+          opacity: 1;
+     }
+}
+
+
+/* ------------------- Login / register ----------------- */
+.grid {
+     margin: 0 auto;
+     max-width: 25rem;
+     width: 100%;
+}
+
+.align-login {
+     align-items: center;
+     display: flex;
+     flex-direction: row;
+}
+
+.input {
+     border: 1px solid #242c37;
+     background-color: ghostwhite;
+     text-align: center;
+}
+
+.card-register {
+     margin-top: 6rem;
+     box-shadow: 0 2px 5px rgba(0, 0, 0, 0.5);
+     text-align: center;
+     padding: 4rem 2rem;
+}
+.a-tag:focus, .a-tag:active, .a-tag:hover {
+     color: #c4ac87 !important;
+}
+
+.a-red-tag:focus, .a-red-tag:active, .a-red-tag:hover {
+     color: #b97676 !important;
+}
+
+.img-show {
+    height: 12.5rem;
+    max-width: 21.8rem;
+}
+
+.img-post {
+     min-height: 12.5rem;
+     max-height: 12.5rem;
+}
+
+.post {
+
+     min-height: 620px;
+}
+
+.scrollable{
+     max-height: 300px;
+     height: 8.3rem;
+}
+
+.btn-card {
+     color: #b79862;
+     border: 1px solid #b79862;
+     font-size: small;
+}
+.btn-card:hover,
+.btn-card:active,
+.btn-card:focus {
+     background-color: #b79862;
+     border: none;
+}
+
+.btn-outline-cancel {
+     color: #b76262;
+     border: 1px solid #b76262;
+     padding: .8rem;
+     background-color: transparent;
+     letter-spacing: .1rem;
+     text-transform: uppercase;
+}
+.btn-outline-cancel:hover,
+.btn-outline-cancel:active,
+.btn-outline-cancel:focus {
+     background-color: #b96c6c;
+     color: white;
+     border: none;
+}
+
+.add {
+     margin: 3rem 3rem;
+}
+
+.comment {
+     padding: 0.4rem 0.2rem;
+     font-family: fangsong;
+     font-size: 0.9rem;
+     background: #252a2e;
+     box-shadow: 0 1px 2px #1e1e1ee3;
+}
+
+.bg-input-comment {
+     background: #252a2e;
+     border: none;
+     height: 3rem;
+}
+
+.bg-input-comment:focus-visible {
+     outline: none;
+     border: none;
+}
+
+.bg-input-comment:focus {
+     background: #343d41;
+}
+
+input:focus {
+     outline: none;
+     border: none;
+}
+/* ------------------- show ----------------- */
+
+.show-content {
+     margin: 2rem 3rem;
+}
+
+/* ------------------- Responsive ----------------- */
+
+@media all and (max-width: 767px) {
+     body {
+          font-size: 12px;
+     }
+     .show-content {
+          margin: 0.5rem 0.8rem;
+     }
+}
