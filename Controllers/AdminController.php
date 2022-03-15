@@ -9,10 +9,11 @@ class AdminController extends Controller
 {
     public function index()
     {
+
         if ($this->isAdmin()) {
 
             $postModel = new PostsModel();
-            $posts = $postModel->findAll();
+            $posts = $postModel->getALlPostWIthCountComment();
 
             $this->render('admin/index', ['posts' => $posts], 'admin');
         }

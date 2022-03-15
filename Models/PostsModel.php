@@ -139,6 +139,9 @@ class PostsModel extends Model
         return $this;
     }
 
+    /**
+     * @return array|false
+     */
     public function FindAllByDESC()
     {
         $query = $this->request('SELECT *,  posts.id as postId, 
@@ -150,5 +153,27 @@ class PostsModel extends Model
                                ORDER BY posts.created_at DESC');
 
         return $query->fetchAll();
+    }
+
+    /**
+     * @return array
+     */
+    public function getALlPostWIthCountComment(): array
+    {
+        $items = $this->findAll();
+        $array = [];
+        foreach ($items as $item) {
+            $commentModel = new CommentsModel();
+            $comments = $commentModel->findBy(
+                array(
+                    'post_id' => $item->id,
+                    'is_valid'=> 0
+                )
+            );
+            $data['post'] = $item;
+            $data['comments'] = count($comments);
+            $array[] = $data;
+        }
+        return $array;
     }
 }

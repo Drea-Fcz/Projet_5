@@ -144,8 +144,4 @@ class CommentsModel extends Model
 
         return $query->fetchAll();
     }
-
-
-
-
 }
