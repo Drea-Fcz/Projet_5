@@ -59,7 +59,7 @@ class PostsController extends Controller
         if (isset($_SESSION['user']) && !empty($_SESSION['user']['id'])) {
             // L'utilisateur est connecté
             // On vérifie si le formulaire est complet
-            if (Form::validate($_POST, ['title', 'chapo', 'body', 'img'])) {
+            if (Form::validate($_POST, ['title', 'chapo', 'body'])) {
                 // Le formulaire est complet
                 // On se protège contre les failles XSS
                 // strip_tags, htmlentities, htmlspecialchars
@@ -88,7 +88,7 @@ class PostsController extends Controller
                         $extension = $fileInfo['extension'];
                         $allowedExtensions = ['jpg', 'jpeg', 'gif', 'png'];
                         if (in_array($extension, $allowedExtensions)) {
-                            move_uploaded_file($_FILES['img']['tmp_name'], '' . $_SERVER['DOCUMENT_ROOT'] . '/projet_5/public/assets/upload/' . basename($_FILES['img']['name']));
+                            move_uploaded_file($_FILES['img']['tmp_name'], '' . $_SERVER['DOCUMENT_ROOT'] . '/poo/public/assets/upload/' . basename($_FILES['img']['name']));
                             echo "Success !";
                         }
                     }
@@ -136,12 +136,13 @@ class PostsController extends Controller
                 ->addInput('file', 'img', [
                     'id' => 'img',
                     'class' => 'form-control',
+                    'accept' => 'image/png, image/jpeg, image/jpg',
                     'value' => $img
                 ])
                 ->endDiv()
                 ->startDiv(['class' => 'd-flex justify-content-end'])
                 ->addAnchorTag('../posts', 'Cancel', ['class' => 'btn btn-outline-cancel me-3'])
-                ->addBouton('Submit', ['value' => 'Submit', 'class' => 'btn btn-outline-success', 'accept' => "image/png, image/jpeg, , image/jpg"])
+                ->addBouton('Submit', ['value' => 'Submit', 'class' => 'btn btn-outline-success'])
                 ->endDiv()
                 ->endForm();
 

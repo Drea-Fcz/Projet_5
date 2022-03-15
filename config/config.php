@@ -21,7 +21,7 @@ const DB_NAME = 'OcBlog';
 /**
  *URL Root
  */
-const URL = 'http://localhost:8888/projet_5';
+const URL = 'http://localhost:8888/poo';
 
 /**
  * Site Name
