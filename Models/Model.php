@@ -53,7 +53,7 @@ class Model extends Db
      */
     public function find(int $id)
     {
-        return $this->request("SELECT * FROM {$this->table} WHERE id = $id")->fetch();
+        return $this->request('SELECT * FROM '. $this->table .' WHERE id = ' . $id)->fetch();
     }
 
     /**

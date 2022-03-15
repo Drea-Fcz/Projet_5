@@ -4,13 +4,13 @@ namespace App\Models;
 
 class PostsModel extends Model
 {
-    protected $id;
-    protected $chapo;
-    protected $title;
-    protected $body;
-    protected $img;
+    protected int $id;
+    protected string $chapo;
+    protected string $title;
+    protected string $body;
+    protected string $img;
     protected $created_at;
-    protected $user_id;
+    protected int $user_id;
 
 
     public function __construct()
@@ -23,7 +23,7 @@ class PostsModel extends Model
     /**
      * @return mixed
      */
-    public function getId()
+    public function getId(): int
     {
         return $this->id;
     }
@@ -31,16 +31,16 @@ class PostsModel extends Model
     /**
      * @param mixed $id
      */
-    public function setId($id)
+    public function setId(int $id): PostsModel
     {
         $this->id = $id;
         return $this;
     }
 
     /**
-     * @return mixed
+     * @return string
      */
-    public function getChapo()
+    public function getChapo(): string
     {
         return $this->chapo;
     }
@@ -48,7 +48,7 @@ class PostsModel extends Model
     /**
      * @param mixed $chapo
      */
-    public function setChapo($chapo)
+    public function setChapo($chapo): PostsModel
     {
         $this->chapo = $chapo;
         return $this;
@@ -65,7 +65,7 @@ class PostsModel extends Model
     /**
      * @param mixed $title
      */
-    public function setTitle($title)
+    public function setTitle($title): PostsModel
     {
         $this->title = $title;
         return $this;
@@ -82,7 +82,7 @@ class PostsModel extends Model
     /**
      * @param mixed $body
      */
-    public function setBody($body)
+    public function setBody($body): PostsModel
     {
         $this->body = $body;
         return $this;
@@ -99,7 +99,7 @@ class PostsModel extends Model
     /**
      * @param mixed $img
      */
-    public function setImg($img)
+    public function setImg($img): PostsModel
     {
         $this->img = $img;
         return $this;
@@ -116,7 +116,7 @@ class PostsModel extends Model
     /**
      * @param mixed $created_at
      */
-    public function setCreatedAt($created_at)
+    public function setCreatedAt($created_at): PostsModel
     {
         $this->created_at = $created_at;
         return $this;
@@ -133,7 +133,7 @@ class PostsModel extends Model
     /**
      * @param mixed $user_id
      */
-    public function setUserId($user_id)
+    public function setUserId($user_id): PostsModel
     {
         $this->user_id = $user_id;
         return $this;

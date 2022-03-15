@@ -49,6 +49,49 @@ class PostsController extends Controller
 
     }
 
+    public function postForm($chapo, $title, $body, $img): Form
+    {
+        $form = new Form;
+
+        $form->startForm('post', '#', ['class' => 'text-white', 'enctype' => "multipart/form-data"])
+            ->startDiv(['class' => 'form-group mb-3'])
+            ->addLabelFor('chapo', 'Chapo :')
+            ->addInput('text', 'chapo', [
+                'id' => 'chapo',
+                'class' => 'form-control',
+                'value' => $chapo
+            ])
+            ->endDiv()
+            ->startDiv(['class' => 'form-group mb-3'])
+            ->addLabelFor('title', 'Title :')
+            ->addInput('text', 'title', [
+                'id' => 'titre',
+                'class' => 'form-control',
+                'value' => $title
+            ])
+            ->endDiv()
+            ->startDiv(['class' => 'form-group mb-3'])
+            ->addLabelFor('body', 'Body')
+            ->addTextarea('body', $body, ['id' => 'body', 'class' => 'form-control'])
+            ->endDiv()
+            ->startDiv(['class' => 'form-group mb-3'])
+            ->addLabelFor('img', 'Image :')
+            ->addInput('file', 'img', [
+                'id' => 'img',
+                'class' => 'form-control',
+                'accept' => 'image/png, image/jpeg, image/jpg',
+                'value' => $img
+            ])
+            ->endDiv()
+            ->startDiv(['class' => 'd-flex justify-content-end'])
+            ->addAnchorTag('../posts', 'Cancel', ['class' => 'btn btn-outline-cancel me-3'])
+            ->addBouton('Submit', ['value' => 'Submit', 'class' => 'btn btn-outline-success'])
+            ->endDiv()
+            ->endForm();
+
+        return $form;
+    }
+
     /**
      * @return void
      */
@@ -115,45 +158,43 @@ class PostsController extends Controller
         }
     }
 
-
-    /**
-     * Modifier le post
-     * @param int $id
-     * @return void
-     */
     public function edit(int $id)
     {
+        // On vérifie si l'utilisateur est connecté
         if (isset($_SESSION['user']) && !empty($_SESSION['user']['id'])) {
             // On va vérifier si l'annonce existe dans la base
             // On instancie notre modèle
-            $postModel = new PostsModel();
+            // On instancie le modèle
+            $postsModel = new PostsModel();
 
-            // On cherche le post avec l'id $id
-            $post = $postModel->find($id);
+            // On va chercher 1 post
+            $post = $postsModel->find($id);
 
-            // Si le post n'existe pas, on retourne à la liste des posts
+            // Si l'annonce n'existe pas, on retourne à la liste des annonces
             if (!$post) {
                 http_response_code(404);
-                $_SESSION['erreur'] = "The post you are looking for does not exist";
-                header('Location: posts');
+                $_SESSION['erreur'] = "L'annonce recherchée n'existe pas";
+                header('Location: /annonces');
                 exit;
             }
 
-            // On vérifie si l'utilisateur est propriétaire du post ou admin
+            // On vérifie si l'utilisateur est propriétaire de l'annonce ou admin
             if ($post->users_id !== $_SESSION['user']['id']) {
-                if (!in_array('ROLE_ADMIN', $_SESSION['user']['role'])) {
-                    $_SESSION['erreur'] = "You do not have access to this page";
-                    header('Location: posts');
+                if (!in_array('ROLE_ADMIN', $_SESSION['user']['roles'])) {
+                    $_SESSION['erreur'] = "Vous n'avez pas accès à cette page";
+                    header('Location: /annonces');
                     exit;
                 }
             }
+
             // On traite le formulaire
-            if(Form::validate($_POST, ['title', 'chapo', 'body'])){
+            if (Form::validate($_POST, ['chapo', 'title', 'body'])) {
                 // On se protège contre les failles XSS
-                $title = strip_tags($_POST['title']);
                 $chapo = strip_tags($_POST['chapo']);
+                $title = strip_tags($_POST['title']);
                 $body = strip_tags($_POST['body']);
                 $img = strip_tags($_FILES['img']['name']);
+
 
                 // On stocke l'annonce
                 $postUpdate = new PostsModel();
@@ -169,57 +210,24 @@ class PostsController extends Controller
                 $postUpdate->update();
 
                 // On redirige
-                $_SESSION['message'] = "Votre annonce a été modifiée avec succès";
-                header('Location: /');
+                $_SESSION['message'] = "Your post has been successfully edited";
+                header('Location: posts');
                 exit;
             }
 
-           // $form = $this->postForm($chapo, $title, $body, $img);
+
+            $form = $this->postForm($post->chapo, $post->title, $post->body, $post->img);
 
             // On envoie à la vue
-            $this->render('posts/edit', ['post' => $post]);
+            $this->render('posts/edit', ['form' => $form->create()]);
+
+        } else {
+            // L'utilisateur n'est pas connecté
+            $_SESSION['error'] = "Vous devez être connecté(e) pour accéder à cette page";
+            header('Location: users/login');
+            exit;
+
         }
     }
 
-    public function postForm($chapo, $title, $body, $img){
-        $form = new Form;
-
-        $form->startForm('post', '#', ['class' => 'text-white', 'enctype' => "multipart/form-data"])
-            ->startDiv(['class' => 'form-group mb-3'])
-            ->addLabelFor('chapo', 'Chapo :')
-            ->addInput('text', 'chapo', [
-                'id' => 'chapo',
-                'class' => 'form-control',
-                'value' => $chapo
-            ])
-            ->endDiv()
-            ->startDiv(['class' => 'form-group mb-3'])
-            ->addLabelFor('title', 'Title :')
-            ->addInput('text', 'title', [
-                'id' => 'titre',
-                'class' => 'form-control',
-                'value' => $title
-            ])
-            ->endDiv()
-            ->startDiv(['class' => 'form-group mb-3'])
-            ->addLabelFor('body', 'Body')
-            ->addTextarea('body', $body, ['id' => 'body', 'class' => 'form-control'])
-            ->endDiv()
-            ->startDiv(['class' => 'form-group mb-3'])
-            ->addLabelFor('img', 'Image :')
-            ->addInput('file', 'img', [
-                'id' => 'img',
-                'class' => 'form-control',
-                'accept' => 'image/png, image/jpeg, image/jpg',
-                'value' => $img
-            ])
-            ->endDiv()
-            ->startDiv(['class' => 'd-flex justify-content-end'])
-            ->addAnchorTag('../posts', 'Cancel', ['class' => 'btn btn-outline-cancel me-3'])
-            ->addBouton('Submit', ['value' => 'Submit', 'class' => 'btn btn-outline-success'])
-            ->endDiv()
-            ->endForm();
-
-        return $form;
-    }
 }

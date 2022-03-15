@@ -14,7 +14,7 @@
                     <h1><?= $post->title ?></h1>
 
                         <div class="d-flex flex-row">
-                            <a href="<?= URL ?>/posts/edit/<?= $post->id ?>" class="btn a-tag color">
+                            <a href="<?= URL ?>/posts/edit/"<?= $post->id ?> class="btn a-tag color">
                                 <i class="fa fa-pencil" aria-hidden="true"></i></a>
 
                             <form action="<?= URL ?>/posts/delete/<?= $post->id ?>" method="POST">
