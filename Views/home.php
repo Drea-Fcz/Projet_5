@@ -37,6 +37,22 @@
         </div>
     </div>
 </nav>
+<?php if (!empty($_SESSION['error'])) :?>
+    <div class="d-flex justify-content-end">
+        <div class="alert alert-danger alert-dismissible fade show mt-3" role="alert">
+            <?php echo $_SESSION['error']; unset($_SESSION['error']) ?>
+            <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
+        </div>
+    </div>
+<?php endif; ?>
+<?php if (!empty($_SESSION['message'])) :?>
+    <div class="d-flex justify-content-end mt-2">
+        <div class="alert alert-success alert-dismissible fade show mt-3" role="alert">
+            <?php echo $_SESSION['message']; unset($_SESSION['message']) ?>
+            <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
+        </div>
+    </div>
+<?php endif; ?>
 
 <?= $content ?>
 

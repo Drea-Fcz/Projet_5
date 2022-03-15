@@ -29,6 +29,15 @@ class PostsModel extends Model
     }
 
     /**
+     * @param mixed $id
+     */
+    public function setId($id)
+    {
+        $this->id = $id;
+        return $this;
+    }
+
+    /**
      * @return mixed
      */
     public function getChapo()
@@ -39,7 +48,7 @@ class PostsModel extends Model
     /**
      * @param mixed $chapo
      */
-    public function setChapo($chapo): PostsModel
+    public function setChapo($chapo)
     {
         $this->chapo = $chapo;
         return $this;
@@ -56,7 +65,7 @@ class PostsModel extends Model
     /**
      * @param mixed $title
      */
-    public function setTitle($title): PostsModel
+    public function setTitle($title)
     {
         $this->title = $title;
         return $this;
@@ -73,7 +82,7 @@ class PostsModel extends Model
     /**
      * @param mixed $body
      */
-    public function setBody($body): PostsModel
+    public function setBody($body)
     {
         $this->body = $body;
         return $this;
@@ -90,7 +99,7 @@ class PostsModel extends Model
     /**
      * @param mixed $img
      */
-    public function setImg($img): PostsModel
+    public function setImg($img)
     {
         $this->img = $img;
         return $this;
@@ -107,7 +116,7 @@ class PostsModel extends Model
     /**
      * @param mixed $created_at
      */
-    public function setCreatedAt($created_at): PostsModel
+    public function setCreatedAt($created_at)
     {
         $this->created_at = $created_at;
         return $this;
