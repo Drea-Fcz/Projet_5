@@ -49,12 +49,15 @@ class UsersModel extends Model
         return $this->id;
     }
 
+
     /**
-     * @param mixed $id
+     * @param $id
+     * @return $this
      */
-    public function setId($id): void
+    public function setId($id): UsersModel
     {
         $this->id = $id;
+        return $this;
     }
 
     /**
@@ -65,12 +68,15 @@ class UsersModel extends Model
         return $this->email;
     }
 
+
     /**
-     * @param mixed $email
+     * @param $email
+     * @return UsersModel
      */
-    public function setEmail($email): void
+    public function setEmail($email): UsersModel
     {
         $this->email = $email;
+        return $this;
     }
 
     /**
@@ -81,12 +87,15 @@ class UsersModel extends Model
         return $this->name;
     }
 
+
     /**
-     * @param mixed $name
+     * @param $name
+     * @return $this
      */
-    public function setName($name): void
+    public function setName($name): UsersModel
     {
         $this->name = $name;
+        return $this;
     }
 
     /**
@@ -98,11 +107,13 @@ class UsersModel extends Model
     }
 
     /**
-     * @param mixed $password
+     * @param $password
+     * @return $this
      */
-    public function setPassword($password): void
+    public function setPassword($password): UsersModel
     {
         $this->password = $password;
+        return $this;
     }
 
     /**
@@ -113,28 +124,36 @@ class UsersModel extends Model
         return $this->create_at;
     }
 
+
     /**
-     * @param mixed $create_at
+     * @param $create_at
+     * @return $this
      */
-    public function setCreateAt($create_at): void
+    public function setCreateAt($create_at): UsersModel
     {
         $this->create_at = $create_at;
+        return $this;
+    }
+
+
+    /**
+     * @return array
+     */
+    public function getRole(): array
+    {
+        $role = $this->role;
+        $role[] ='ROLE_USER';
+        return array_unique($role);
     }
 
     /**
-     * @return mixed
+     * @param $role
+     * @return $this
      */
-    public function getRole()
+    public function setRole($role): UsersModel
     {
-        return $this->role;
-    }
-
-    /**
-     * @param mixed $role
-     */
-    public function setRole($role): void
-    {
-        $this->role = $role;
+        $this->role = json_decode($role);
+        return $this;
     }
 
 }
