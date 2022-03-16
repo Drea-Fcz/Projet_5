@@ -24,7 +24,8 @@
         </button>
         <div class="collapse navbar-collapse" id="navbarNav">
             <ul class="navbar-nav text-white ms-auto">
-                <li class="nav-item"><a class="nav-link" href="<?= URL ?>/admin">Home</a></li>
+                <li class="nav-item"><a class="nav-link" href="<?= URL ?>/main">Home</a></li>
+                <li class="nav-item"><a class="nav-link" href="<?= URL ?>/admin">Dashboard</a></li>
                 <li class="nav-item"><a class="nav-link" href="<?= URL ?>/admin/user">Setting Users</a></li>
 
                 <?php if (isset($_SESSION['user']) && !empty($_SESSION['user']['id']) !== null) : ?>

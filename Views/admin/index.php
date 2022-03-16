@@ -14,8 +14,9 @@
                             <p class="d-flex justify-content-between">Comments pending <span class="badge rounded-pill bg-dark text-white ml-auto"><?= $post['comments'] ?></span></p>
                     </div>
                     <div class="d-flex justify-content-end">
-                        <a href="admin/comments/<?= $post['post']->postId ?>"
-                           class="btn btn-card m-4">Validate</a>
+                        <a href="admin/comments/<?= $post['post']->id ?>"
+                           class="btn btn-card m-4
+                        <?php echo (empty($post['comments'])) ? 'disabled' : ''; ?>">More -></a>
                     </div>
                 </div>
             </div>

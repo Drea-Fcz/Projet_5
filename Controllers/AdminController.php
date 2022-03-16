@@ -25,6 +25,9 @@ class AdminController extends Controller
     public function comments($id)
     {
         if($this->isAdmin()){
+            $postModel = new PostsModel();
+            $post = $postModel->find($id);
+
             $commentModel = new CommentsModel();
 
             $comments = $commentModel->findBy(
@@ -34,7 +37,7 @@ class AdminController extends Controller
                 )
             );
 
-            $this->render('admin/comments', ['comments' => $comments ], 'admin');
+            $this->render('admin/comments', ['post' => $post, 'comments' => $comments ], 'admin');
         }
     }
 
