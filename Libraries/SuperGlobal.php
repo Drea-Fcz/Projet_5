@@ -38,7 +38,6 @@ class SuperGlobal
     public function get_POST($key = null)
     {
         if (null !== $key) {
-            // $this_POST = filter_input_array(INPUT_POST, FILTER_SANITIZE_STRING);
 
             return (isset($this->_POST["$key"])) ? $this->_POST["$key"] : null;
         } else {
@@ -85,9 +84,6 @@ class SuperGlobal
     private function define_superglobals()
     {
 
-        // Store a local copy of the PHP superglobals
-        // This should avoid dealing with the global scope directly
-        // $this->_SERVER = $_SERVER;
         $this->_SERVER = (isset($_SERVER)) ? $_SERVER : null;
         $this->_POST = (isset($_POST)) ? $_POST : null;
         $this->_GET = (isset($_GET)) ? $_GET : null;

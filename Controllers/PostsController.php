@@ -13,7 +13,8 @@ class PostsController extends Controller
     private $global;
     private $session;
 
-    public function __construct(){
+    public function __construct()
+    {
         $this->global = new SuperGlobal();
         $this->session = new Session();
     }
@@ -53,7 +54,6 @@ class PostsController extends Controller
         $commentsModel = new CommentsModel();
 
         $comments = $commentsModel->findByPostId($idPost);
-
 
 
         // On envoie à la vue
@@ -140,19 +140,18 @@ class PostsController extends Controller
                 $this->saveImg($_FILES);
 
                 // On redirige
-                $this->session->set('message','Your post has been successfully registered');
+                $this->session->set('message', 'Your post has been successfully registered');
 
                 header('Location: ../posts');
                 exit;
-            } else {
-                // Le formulaire est incomplet
-                //$_SESSION['erreur'] = !empty($_POST) ? "Le formulaire est incomplet" : '';
-                $this->session->set('erreur',!empty($_POST) ? "Le formulaire est incomplet" : '');
-                $title = isset($_POST['title']) ? strip_tags($this->global->get_POST('title')) : '';
-                $chapo = isset($_POST['chapo']) ? strip_tags($this->global->get_POST('chapo')) : '';
-                $body = isset($_POST['body']) ? strip_tags($this->global->get_POST('body')) : '';
-                $img = isset($_FILES['img']['name']) ? strip_tags($_FILES['img']['name']) : '';
             }
+            // Le formulaire est incomplet
+            //$_SESSION['erreur'] = !empty($_POST) ? "Le formulaire est incomplet" : '';
+            $this->session->set('erreur', !empty($_POST) ? "Le formulaire est incomplet" : '');
+            $title = isset($_POST['title']) ? strip_tags($this->global->get_POST('title')) : '';
+            $chapo = isset($_POST['chapo']) ? strip_tags($this->global->get_POST('chapo')) : '';
+            $body = isset($_POST['body']) ? strip_tags($this->global->get_POST('body')) : '';
+            $img = isset($_FILES['img']['name']) ? strip_tags($_FILES['img']['name']) : '';
 
 
             $form = $this->postForm($chapo, $title, $body, $img);
@@ -181,7 +180,7 @@ class PostsController extends Controller
             // Si l'post n'existe pas, on retourne à la liste des posts
             if (!$post) {
                 http_response_code(404);
-                $this->session->set('erreur','The post you are looking for does not exist');
+                $this->session->set('erreur', 'The post you are looking for does not exist');
 
                 header('Location: /posts');
                 exit;
@@ -213,9 +212,9 @@ class PostsController extends Controller
                 $this->saveImg($_FILES);
 
                 // On redirige
-                $this->session->set('message','Your post has been successfully edited');
+                $this->session->set('message', 'Your post has been successfully edited');
 
-                header('Location: ../show/' . $post->id );
+                header('Location: ../show/' . $post->id);
                 exit;
             }
 
@@ -227,7 +226,7 @@ class PostsController extends Controller
 
         } else {
             // L'utilisateur n'est pas connecté
-            $this->session->set('error','You must be logged in to access this page');
+            $this->session->set('error', 'You must be logged in to access this page');
 
             header('Location: users/login');
             exit;
@@ -235,7 +234,8 @@ class PostsController extends Controller
         }
     }
 
-    public function saveImg($file) {
+    public function saveImg($file)
+    {
         //save picture
         if (isset($file['img']) && $file['img']['error'] == 0) {
             if ($file['img']['size'] <= 2000000) {
@@ -243,7 +243,7 @@ class PostsController extends Controller
                 $extension = $fileInfo['extension'];
                 $allowedExtensions = ['jpg', 'jpeg', 'gif', 'png'];
                 if (in_array($extension, $allowedExtensions)) {
-                    move_uploaded_file($file['img']['tmp_name'], '' . $_SERVER['DOCUMENT_ROOT'] . '/poo/public/assets/upload/' . basename($_FILES['img']['name']));
+                    move_uploaded_file($file['img']['tmp_name'], '' . $this->global->get_SERVER('DOCUMENT_ROOT') . '/poo/public/assets/upload/' . basename($_FILES['img']['name']));
                     echo "Success !";
                 }
             }

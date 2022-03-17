@@ -10,7 +10,8 @@ class AdminController extends Controller
 {
     private $session;
 
-    public function __construct(){
+    public function __construct()
+    {
         $this->session = new Session();
     }
 
@@ -44,7 +45,7 @@ class AdminController extends Controller
                 )
             );
 
-            if (count($comments) == 0 ) {
+            if (count($comments) == 0) {
                 header('Location: ../../admin');
             }
 
@@ -62,12 +63,12 @@ class AdminController extends Controller
         if (isset($_SESSION['user']) && in_array('ROLE_ADMIN', $_SESSION['user']['role'])) {
             // On est admin
             return true;
-        } else {
-            // On n'est pas admin
-            $this->session->set('error','You do not have access to this area');
-            header('Location: main');
-            exit;
         }
+
+        // On n'est pas admin
+        $this->session->set('error', 'You do not have access to this area');
+        header('Location: main');
+        exit;
     }
 
     public function validComment(int $idComment)
