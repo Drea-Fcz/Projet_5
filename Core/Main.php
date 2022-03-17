@@ -2,14 +2,17 @@
 namespace App\Core;
 
 use App\Controllers\MainController;
+use App\Libraries\SuperGlobal;
 
 /**
  * Routeur principal
  */
 class Main
 {
+
     public function start()
     {
+        $global = new SuperGlobal();
         // On démarre la session
         session_start();
 
@@ -33,8 +36,8 @@ class Main
         // p=controleur/methode/paramètres
         // On sépare les paramètres dans un tableau
         $params = [];
-        if(isset($_GET['p']))
-            $params = explode('/', $_GET['p']);
+        if($global->get_GET("p") !== null)
+            $params = explode('/', $global->get_GET("p"));
 
         // var_dump($params);
         if($params[0] != ''){

@@ -1,7 +1,5 @@
 <div class="d-flex justify-content-between m-3">
     <a href="<?= URL ?>/posts" class="btn color">&larr; Back</a>
-        <a href="<?= URL ?>/comments/show/<?= $idPost ?>" class="btn a-tag color">Validate Comments
-            <span class="badge rounded-pill bg-light text-dark">2</span></a>
 </div>
 <div class="container text-white">
     <div class="card bg-dark p-4">
@@ -43,7 +41,7 @@
                     </div>
                 <hr>
                 <?php foreach ($comments as $comment) : ?>
-                        <div class="card comment mb-3">
+                        <div class="card comment_dark mb-3">
                             <div class="container mt-1">
                                 <div class="d-flex justify-content-between px-1">
                                     <b class="color text-capitalize small"><?= $comment->name ?> </b>

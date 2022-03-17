@@ -3,14 +3,17 @@
 namespace App\Controllers;
 
 use App\Core\Form;
+use App\Libraries\SuperGlobal;
 use App\Models\UsersModel;
 
 class UsersController extends Controller
 {
     private $form;
+    private $global;
 
     public function __construct(){
         $this->form = new Form();
+        $this->global = new SuperGlobal();
     }
     /**
      * Connexion des utilisateurs
@@ -36,7 +39,7 @@ class UsersController extends Controller
             $user = $usersModel->hydrate($userArray);
 
             // On vérifie si le mot de passe est correct
-            if (password_verify($_POST['password'], $user->getPassword())){
+            if (password_verify($this->global->get_POST('password'), $user->getPassword())){
                 // Le mot de passe est bon
                 // On crée la session
                 $user->setSession();
@@ -78,12 +81,12 @@ class UsersController extends Controller
         if(Form::validate($_POST, ['name', 'email', 'password'])){
             // Le formulaire est valide
             // On "nettoie" l'adresse email
-            $email = strip_tags($_POST['email']);
-            $name = strip_tags($_POST['name']);
+            $email = strip_tags($this->global->get_POST('email'));
+            $name = strip_tags($this->global->get_POST('name'));
 
             // On chiffre le mot de passe
-            if ($_POST['password'] === $_POST['confirm_password']){
-                $pass = password_hash($_POST['password'], PASSWORD_BCRYPT);
+            if ($this->global->get_POST('password') === $this->global->get_POST('confirm_password')){
+                $pass = password_hash($this->global->get_POST('password'), PASSWORD_BCRYPT);
 
             // On hydrate l'utilisateur
             $user = new UsersModel;
@@ -128,7 +131,7 @@ class UsersController extends Controller
      */
     public function logout() {
         unset($_SESSION['user']);
-        header('Location: '. $_SERVER['HTTP_REFERER']);
+        header('Location: '. $this->global->get_SERVER('HTTP_REFERER'));
         exit;
     }
 }

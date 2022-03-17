@@ -7,6 +7,7 @@ use App\Models\PostsModel;
 
 class AdminController extends Controller
 {
+
     public function index()
     {
 
@@ -36,6 +37,10 @@ class AdminController extends Controller
                     'is_valid' => 0
                 )
             );
+
+            if (count($comments) == 0 ) {
+                header('Location: ../../admin');
+            }
 
             $this->render('admin/comments', ['post' => $post, 'comments' => $comments], 'admin');
         }
@@ -87,6 +92,7 @@ class AdminController extends Controller
         if ($this->isAdmin()) {
             $comment = new CommentsModel();
             $comment->delete($id);
+            header('Location: ../../admin');
         }
     }
 }
