@@ -3,11 +3,17 @@
 namespace App\Controllers;
 
 use App\Core\Form;
+use App\Libraries\SuperGlobal;
 use App\Models\CommentsModel;
 use App\Models\PostsModel;
 
 class PostsController extends Controller
 {
+    private $global;
+
+    public function __construct(){
+        $this->global = new SuperGlobal();
+    }
     /**
      * @return void
      */
@@ -108,9 +114,9 @@ class PostsController extends Controller
                 // Le formulaire est complet
                 // On se protège contre les failles XSS
                 // strip_tags, htmlentities, htmlspecialchars
-                $title = strip_tags($_POST['title']);
-                $chapo = strip_tags($_POST['chapo']);
-                $body = strip_tags($_POST['body']);
+                $title = strip_tags($this->global->get_POST('title'));
+                $chapo = strip_tags($this->global->get_POST('chapo'));
+                $body = strip_tags($this->global->get_POST('body'));
                 $img = strip_tags($_FILES['img']['name']);
 
                 // On instancie notre modèle
@@ -136,9 +142,9 @@ class PostsController extends Controller
             } else {
                 // Le formulaire est incomplet
                 $_SESSION['erreur'] = !empty($_POST) ? "Le formulaire est incomplet" : '';
-                $title = isset($_POST['title']) ? strip_tags($_POST['title']) : '';
-                $chapo = isset($_POST['chapo']) ? strip_tags($_POST['chapo']) : '';
-                $body = isset($_POST['body']) ? strip_tags($_POST['body']) : '';
+                $title = isset($_POST['title']) ? strip_tags($this->global->get_POST('title')) : '';
+                $chapo = isset($_POST['chapo']) ? strip_tags($this->global->get_POST('chapo')) : '';
+                $body = isset($_POST['body']) ? strip_tags($this->global->get_POST('body')) : '';
                 $img = isset($_FILES['img']['name']) ? strip_tags($_FILES['img']['name']) : '';
             }
 
@@ -177,9 +183,9 @@ class PostsController extends Controller
             // On traite le formulaire
             if (Form::validate($_POST, ['chapo', 'title', 'body'])) {
                 // On se protège contre les failles XSS
-                $chapo = strip_tags($_POST['chapo']);
-                $title = strip_tags($_POST['title']);
-                $body = strip_tags($_POST['body']);
+                $title = strip_tags($this->global->get_POST('title'));
+                $chapo = strip_tags($this->global->get_POST('chapo'));
+                $body = strip_tags($this->global->get_POST('body'));
                 $img = strip_tags($_FILES['img']['name']) == '' ? $post->img : strip_tags($_FILES['img']['name']);
 
 

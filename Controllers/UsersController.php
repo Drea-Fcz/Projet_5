@@ -25,7 +25,7 @@ class UsersController extends Controller
             // Le formulaire est complet
             // On va chercher dans la base de données l'utilisateur avec l'email entré
             $usersModel = new UsersModel;
-            $userArray = $usersModel->findOneByEmail(strip_tags($_POST['email']));
+            $userArray = $usersModel->findOneByEmail(strip_tags($this->global->get_POST('email')));
 
             // Si l'utilisateur n'existe pas
             if(!$userArray){
