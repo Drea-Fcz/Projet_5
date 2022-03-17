@@ -161,7 +161,7 @@ class Model extends Db
                 $this->$setter($value);
             }
         }
-        
+
         return $this;
     }
 }

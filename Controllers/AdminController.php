@@ -61,20 +61,20 @@ class AdminController extends Controller
 
     public function validComment(int $idComment)
     {
-
         // requête de validation des commentaires
+        if ($this->isAdmin()) {
             $commentModel = new CommentsModel();
             $commentArray = $commentModel->find($idComment);
 
             if ($commentArray) {
                 $comment = $commentModel->hydrate($commentArray);
 
-                var_dump($comment);
-                die();
-
                 $comment->setIsValid($comment->getIsValid() ? 0 : 1);
                 $comment->update();
+
+                header('Location: ../../admin/comments/' . $comment->getPostId());
             }
+        }
     }
 
     /**
