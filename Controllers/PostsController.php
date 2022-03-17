@@ -3,6 +3,7 @@
 namespace App\Controllers;
 
 use App\Core\Form;
+use App\Libraries\Session;
 use App\Libraries\SuperGlobal;
 use App\Models\CommentsModel;
 use App\Models\PostsModel;
@@ -10,10 +11,13 @@ use App\Models\PostsModel;
 class PostsController extends Controller
 {
     private $global;
+    private $session;
 
     public function __construct(){
         $this->global = new SuperGlobal();
+        $this->session = new Session();
     }
+
     /**
      * @return void
      */
@@ -136,12 +140,14 @@ class PostsController extends Controller
                 $this->saveImg($_FILES);
 
                 // On redirige
-                $_SESSION['message'] = "Your post has been successfully registered";
+                $this->session->set('message','Your post has been successfully registered');
+
                 header('Location: ../posts');
                 exit;
             } else {
                 // Le formulaire est incomplet
-                $_SESSION['erreur'] = !empty($_POST) ? "Le formulaire est incomplet" : '';
+                //$_SESSION['erreur'] = !empty($_POST) ? "Le formulaire est incomplet" : '';
+                $this->session->set('erreur',!empty($_POST) ? "Le formulaire est incomplet" : '');
                 $title = isset($_POST['title']) ? strip_tags($this->global->get_POST('title')) : '';
                 $chapo = isset($_POST['chapo']) ? strip_tags($this->global->get_POST('chapo')) : '';
                 $body = isset($_POST['body']) ? strip_tags($this->global->get_POST('body')) : '';
@@ -175,7 +181,8 @@ class PostsController extends Controller
             // Si l'post n'existe pas, on retourne à la liste des posts
             if (!$post) {
                 http_response_code(404);
-                $_SESSION['erreur'] = "The post you are looking for does not exist";
+                $this->session->set('erreur','The post you are looking for does not exist');
+
                 header('Location: /posts');
                 exit;
             }
@@ -206,8 +213,9 @@ class PostsController extends Controller
                 $this->saveImg($_FILES);
 
                 // On redirige
-                $_SESSION['message'] = "Your post has been successfully edited";
-                 header('Location: ../show/' . $post->id );
+                $this->session->set('message','Your post has been successfully edited');
+
+                header('Location: ../show/' . $post->id );
                 exit;
             }
 
@@ -219,7 +227,8 @@ class PostsController extends Controller
 
         } else {
             // L'utilisateur n'est pas connecté
-            $_SESSION['error'] = "You must be logged in to access this page";
+            $this->session->set('error','You must be logged in to access this page');
+
             header('Location: users/login');
             exit;
 

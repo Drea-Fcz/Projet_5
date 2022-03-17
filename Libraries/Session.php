@@ -13,7 +13,7 @@ class Session
         return $_SESSION[$index];
     }
 
-    public function write($index, $value)
+    public function set($index, $value)
     {
         $_SESSION[$index] = $value;
     }

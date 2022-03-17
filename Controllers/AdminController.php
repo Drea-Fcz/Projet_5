@@ -2,11 +2,17 @@
 
 namespace App\Controllers;
 
+use App\Libraries\Session;
 use App\Models\CommentsModel;
 use App\Models\PostsModel;
 
 class AdminController extends Controller
 {
+    private $session;
+
+    public function __construct(){
+        $this->session = new Session();
+    }
 
     public function index()
     {
@@ -58,7 +64,7 @@ class AdminController extends Controller
             return true;
         } else {
             // On n'est pas admin
-            $_SESSION['error'] = "You do not have access to this area";
+            $this->session->set('error','You do not have access to this area');
             header('Location: main');
             exit;
         }
