@@ -15,30 +15,18 @@
                 </div>
                 <div class="col-md-2 align-self-center ">
                     <div class="d-flex flex-row-reverse">
-                        <form action="<?= URL  ?>/comments/delete/<?= $comment->comment_id ?>" method="POST">
+                        <form action="<?= URL  ?>/admin/delete/<?= $comment->id ?>" method="POST">
                             <button type="submit" value="" class="btn red a-red-tag">
                                 <i class="fa-solid fa-xmark" aria-hidden="true"></i>
                             </button>
                         </form>
-                        <form action="<?=  URL  ?>/comments/check/<?= $comment->comment_id ?>" method="POST">
+                        <form action="<?=  URL  ?>/admin/validComment/<?= $comment->id ?>" method="POST">
                             <button type="submit" value="" class="btn color a-tag">
                                 <i class="fa fa-check" aria-hidden="true"></i>
                             </button>
                         </form>
                     </div>
                 </div>
-                <!--<div class="d-flex row-flex">
-                        <form action="<? /*= URL */ ?>/comments/check/<? /*= $comment->comment_id */ ?>" method="POST">
-                            <button type="submit" value="" class="btn color a-tag">
-                                <i class="fa fa-check" aria-hidden="true"></i>
-                            </button>
-                        </form>
-                        <form action="<? /*= URL */ ?>/comments/delete/<? /*= $comment->comment_id */ ?>" method="POST">
-                            <button type="submit" value="" class="btn red a-red-tag">
-                                <i class="fa-solid fa-xmark" aria-hidden="true"></i>
-                            </button>
-                        </form>
-                    </div>-->
             </div>
         </div>
     </div>

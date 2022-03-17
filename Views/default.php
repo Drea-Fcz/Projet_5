@@ -27,7 +27,7 @@
                 <li class="nav-item"><a class="nav-link" href="<?= URL ?>/main">Home</a></li>
                 <li class="nav-item"><a class="nav-link" href="<?= URL ?>/posts">Posts</a></li>
                 <?php if (isset($_SESSION['user']) && !empty($_SESSION['user']['id']) !== null) : ?>
-                    <?php if (isset($_SESSION['role']) && in_array('ROLE_ADMIN',$_SESSION['user']['role'])) : ?>
+                    <?php if (isset($_SESSION['user']['role']) && in_array('ROLE_ADMIN',$_SESSION['user']['role'])) : ?>
                         <li class="nav-item"><a class="nav-link" href="<?= URL ?>/admin">Dashboard</a></li>
                     <?php endif;  ?>
                     <li class="nav-item"><a class="nav-link" href="<?= URL ?>/users/logout">Logout</a></li>

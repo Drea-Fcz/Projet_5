@@ -24,20 +24,20 @@ class AdminController extends Controller
      **/
     public function comments($id)
     {
-        if($this->isAdmin()){
+        if ($this->isAdmin()) {
             $postModel = new PostsModel();
             $post = $postModel->find($id);
 
             $commentModel = new CommentsModel();
 
             $comments = $commentModel->findBy(
-                array (
+                array(
                     'post_id' => $id,
                     'is_valid' => 0
                 )
             );
 
-            $this->render('admin/comments', ['post' => $post, 'comments' => $comments ], 'admin');
+            $this->render('admin/comments', ['post' => $post, 'comments' => $comments], 'admin');
         }
     }
 
@@ -48,10 +48,10 @@ class AdminController extends Controller
     private function isAdmin()
     {
         // On vérifie si on est connecté et si "ROLE_ADMIN" est dans nos rôles
-        if(isset($_SESSION['user']) && in_array('ROLE_ADMIN', $_SESSION['user']['role'])){
+        if (isset($_SESSION['user']) && in_array('ROLE_ADMIN', $_SESSION['user']['role'])) {
             // On est admin
             return true;
-        }else{
+        } else {
             // On n'est pas admin
             $_SESSION['error'] = "You do not have access to this area";
             header('Location: main');
@@ -59,19 +59,22 @@ class AdminController extends Controller
         }
     }
 
-    public function validComment(int $id) {
+    public function validComment(int $idComment)
+    {
+
         // requête de validation des commentaires
-        if ($this->isAdmin()) {
             $commentModel = new CommentsModel();
-            $commentArray = $commentModel->find($id);
+            $commentArray = $commentModel->find($idComment);
 
             if ($commentArray) {
                 $comment = $commentModel->hydrate($commentArray);
 
+                var_dump($comment);
+                die();
+
                 $comment->setIsValid($comment->getIsValid() ? 0 : 1);
                 $comment->update();
             }
-        }
     }
 
     /**
@@ -79,8 +82,9 @@ class AdminController extends Controller
      * @param int $id
      * @return void
      */
-    public function delete(int $id) {
-        if ($this->isAdmin()){
+    public function delete(int $id)
+    {
+        if ($this->isAdmin()) {
             $comment = new CommentsModel();
             $comment->delete($id);
         }
