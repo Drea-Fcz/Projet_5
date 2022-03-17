@@ -19,6 +19,10 @@ class CommentsModel extends Model
 
     }
 
+    public function updateValidComment() {
+        $this->update();
+    }
+
     /**
      * @return mixed
      */

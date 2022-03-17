@@ -58,4 +58,31 @@ class AdminController extends Controller
             exit;
         }
     }
+
+    public function validComment(int $id) {
+        // requête de validation des commentaires
+        if ($this->isAdmin()) {
+            $commentModel = new CommentsModel();
+            $commentArray = $commentModel->find($id);
+
+            if ($commentArray) {
+                $comment = $commentModel->hydrate($commentArray);
+
+                $comment->setIsValid($comment->getIsValid() ? 0 : 1);
+                $comment->update();
+            }
+        }
+    }
+
+    /**
+     * Supprimer le commentaire
+     * @param int $id
+     * @return void
+     */
+    public function delete(int $id) {
+        if ($this->isAdmin()){
+            $comment = new CommentsModel();
+            $comment->delete($id);
+        }
+    }
 }
