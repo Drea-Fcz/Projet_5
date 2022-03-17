@@ -32,28 +32,28 @@ class PostsController extends Controller
 
     /**
      * Afficher un post
-     * @param int $id
+     * @param int $idPost
      * @return void
      */
-    public function show(int $id)
+    public function show(int $idPost)
     {
 
         // On instancie le modèle
         $postsModel = new PostsModel();
 
         // On va chercher 1 post
-        $post = $postsModel->find($id);
-        $idPost = intval($post->id);
+        $post = $postsModel->find($idPost);
+        $idRedirect = intval($post->id);
 
         // On récupère les commentaires valides du post
         $commentsModel = new CommentsModel();
 
-        $comments = $commentsModel->findByPostId($id);
+        $comments = $commentsModel->findByPostId($idPost);
 
 
 
         // On envoie à la vue
-        $this->render('posts/show', ['post' => $post, 'comments' => $comments, 'idPost' => $idPost]);
+        $this->render('posts/show', ['post' => $post, 'comments' => $comments, 'idPost' => $idRedirect]);
 
     }
 
@@ -157,10 +157,10 @@ class PostsController extends Controller
     }
 
     /**
-     * @param int $id
+     * @param int $idPost
      * @return void
      */
-    public function edit(int $id)
+    public function edit(int $idPost)
     {
         // On vérifie si l'utilisateur est connecté
         if (isset($_SESSION['user']) && !empty($_SESSION['user']['id'])) {
@@ -170,7 +170,7 @@ class PostsController extends Controller
             $postsModel = new PostsModel();
 
             // On va chercher 1 post
-            $post = $postsModel->find($id);
+            $post = $postsModel->find($idPost);
 
             // Si l'post n'existe pas, on retourne à la liste des posts
             if (!$post) {

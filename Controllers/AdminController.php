@@ -23,17 +23,17 @@ class AdminController extends Controller
     /**
      * Affiche la liste des annonces sous forme de tableau
      **/
-    public function comments($id)
+    public function comments($idComment)
     {
         if ($this->isAdmin()) {
             $postModel = new PostsModel();
-            $post = $postModel->find($id);
+            $post = $postModel->find($idComment);
 
             $commentModel = new CommentsModel();
 
             $comments = $commentModel->findBy(
                 array(
-                    'post_id' => $id,
+                    'post_id' => $idComment,
                     'is_valid' => 0
                 )
             );
@@ -84,14 +84,14 @@ class AdminController extends Controller
 
     /**
      * Supprimer le commentaire
-     * @param int $id
+     * @param int $idComment
      * @return void
      */
-    public function delete(int $id)
+    public function delete(int $idComment)
     {
         if ($this->isAdmin()) {
             $comment = new CommentsModel();
-            $comment->delete($id);
+            $comment->delete($idComment);
             header('Location: ../../admin');
         }
     }
