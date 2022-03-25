@@ -18,7 +18,7 @@ class Main
 
         // On retire le "trailing slash" éventuel de l'URL
         // On récupère l'URL
-        $uri = $_SERVER['REQUEST_URI'];
+        $uri = $global->get_SERVER('REQUEST_URI');
 
         // On vérifie que uri n'est pas vide et se termine par un /
         if(!empty($uri) && $uri[-1] === '/' && $uri[-1] != '/'){
@@ -55,10 +55,9 @@ class Main
             if(method_exists($controller, $action)){
                 // Si il reste des paramètres on les passe à la méthode
                 (isset($params[0])) ? call_user_func_array([$controller, $action], $params) : $controller->$action();
-            }else{
-                http_response_code(404);
-                echo "La page recherchée n'existe pas";
             }
+                http_response_code(404);
+                return "La page recherchée n'existe pas";
 
         }else{
             // On n'a pas de paramètres

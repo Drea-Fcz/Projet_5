@@ -239,7 +239,6 @@ class PostsController extends Controller
                 $allowedExtensions = ['jpg', 'jpeg', 'gif', 'png'];
                 if (in_array($extension, $allowedExtensions)) {
                     move_uploaded_file($file['img']['tmp_name'], '' . $this->global->get_SERVER('DOCUMENT_ROOT') . '/poo/public/assets/upload/' . basename($_FILES['img']['name']));
-                    echo "Success !";
                 }
             }
         }
