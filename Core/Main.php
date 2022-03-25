@@ -33,13 +33,12 @@ class Main
         }
 
         // On gère les paramètres d'URL
-        // p=controleur/methode/paramètres
+        // p= contrôleur/methode/paramètres
         // On sépare les paramètres dans un tableau
         $params = [];
         if($global->get_GET("p") !== null)
             $params = explode('/', $global->get_GET("p"));
 
-        // var_dump($params);
         if($params[0] != ''){
             // On a au moins 1 paramètre
             // On récupère le nom du contrôleur à instancier
