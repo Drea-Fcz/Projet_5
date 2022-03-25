@@ -37,7 +37,6 @@ class UsersController extends Controller
                 $this->session->set('error', 'You must be logged in to access this page');
 
                 header('Location: login');
-                exit;
             }
 
             // L'utilisateur existe
@@ -54,7 +53,6 @@ class UsersController extends Controller
                 $this->session->set('error', 'Incorrect e-mail address and/or password');
                 header('Location: login');
             }
-            exit;
         }
 
         $this->form->startForm()
@@ -106,7 +104,6 @@ class UsersController extends Controller
                 $this->session->set('error', 'The informations are not valid');
 
                 header('Location: register');
-                exit;
             }
         }
         $this->form->startForm()
@@ -138,6 +135,5 @@ class UsersController extends Controller
     public function logout() {
         unset($_SESSION['user']);
         header('Location: '. $this->global->get_SERVER('HTTP_REFERER'));
-        exit;
     }
 }

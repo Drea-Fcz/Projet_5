@@ -68,7 +68,6 @@ class AdminController extends Controller
         // On n'est pas admin
         $this->session->set('error', 'You do not have access to this area');
         header('Location: main');
-        exit;
     }
 
     public function validComment(int $idComment)

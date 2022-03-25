@@ -143,7 +143,6 @@ class PostsController extends Controller
                 $this->session->set('message', 'Your post has been successfully registered');
 
                 header('Location: ../posts');
-                exit;
             }
             // Le formulaire est incomplet
             //$_SESSION['erreur'] = !empty($_POST) ? "Le formulaire est incomplet" : '';
@@ -183,7 +182,6 @@ class PostsController extends Controller
                 $this->session->set('erreur', 'The post you are looking for does not exist');
 
                 header('Location: /posts');
-                exit;
             }
 
             // On traite le formulaire
@@ -215,7 +213,6 @@ class PostsController extends Controller
                 $this->session->set('message', 'Your post has been successfully edited');
 
                 header('Location: ../show/' . $post->id);
-                exit;
             }
 
 
@@ -229,8 +226,6 @@ class PostsController extends Controller
             $this->session->set('error', 'You must be logged in to access this page');
 
             header('Location: users/login');
-            exit;
-
         }
     }
 
