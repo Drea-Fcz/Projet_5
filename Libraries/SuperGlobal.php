@@ -14,6 +14,7 @@ class SuperGlobal
     {
         $this->define_superglobals();
     }
+
     /**
      * Returns a key from the superglobal,
      * as it was at the time of instantiation.
@@ -29,6 +30,7 @@ class SuperGlobal
             return $this->_SERVER;
         }
     }
+
     /**
      * Returns a key from the superglobal,
      * as it was at the time of instantiation.
@@ -40,7 +42,7 @@ class SuperGlobal
     {
         if (null !== $key) {
 
-            return (isset($this->_POST["$key"])) ? $this->_POST["$key"] : null;
+            return (isset($this->_POST["$key"])) ? $this->_POST["$key"] = filter_input(INPUT_POST, $key, FILTER_SANITIZE_STRING) : null;
         } else {
             return $this->_POST;
         }
@@ -56,11 +58,13 @@ class SuperGlobal
     public function get_GET($key = null)
     {
         if (null !== $key) {
-            return (isset($this->_GET["$key"])) ? $this->_GET["$key"] : null;
+
+            return (isset($this->_GET["$key"])) ? $this->_GET["$key"] = filter_input(INPUT_GET, $key, FILTER_SANITIZE_STRING) : null;
         } else {
             return $this->_GET;
         }
     }
+
     /**
      * Returns a key from the superglobal,
      * as it was at the time of instantiation.
