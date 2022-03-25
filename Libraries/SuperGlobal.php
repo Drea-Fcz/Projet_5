@@ -6,6 +6,7 @@ class SuperGlobal
 {
     private $_SERVER;
     private $_POST;
+    private $_FILES;
     private $_GET;
     private $_SESSION;
 
@@ -44,6 +45,7 @@ class SuperGlobal
             return $this->_POST;
         }
     }
+
     /**
      * Returns a key from the superglobal,
      * as it was at the time of instantiation.
@@ -74,6 +76,24 @@ class SuperGlobal
             return $this->_SESSION;
         }
     }
+
+    /**
+     * Returns a key from the superglobal,
+     * as it was at the time of instantiation.
+     *
+     * @param $key
+     * @return mixed
+     */
+    public function get_FILE($key = null)
+    {
+        if (null !== $key) {
+
+            return (isset($this->_FILES["$key"])) ? $this->_FILES["$key"] : null;
+        } else {
+            return $this->_FILES;
+        }
+    }
+
     /**
      * Function to define superglobals for use locally.
      * We do not automatically unset the superglobals after
@@ -87,9 +107,11 @@ class SuperGlobal
         $this->_SERVER = (isset($_SERVER)) ? $_SERVER : null;
         $this->_POST = (isset($_POST)) ? $_POST : null;
         $this->_GET = (isset($_GET)) ? $_GET : null;
+        $this->_FILES = (isset($_FILES)) ? $_FILES : null;
         $this->_SESSION = (isset($_SESSION)) ? $_SESSION : null;
 
     }
+
     /**
      * You may call this function from your compositioning root,
      * if you are sure superglobals will not be needed by

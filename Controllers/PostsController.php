@@ -121,7 +121,7 @@ class PostsController extends Controller
                 $title = strip_tags($this->global->get_POST('title'));
                 $chapo = strip_tags($this->global->get_POST('chapo'));
                 $body = strip_tags($this->global->get_POST('body'));
-                $img = strip_tags($_FILES['img']['name']);
+                $img = strip_tags($this->global->get_FILE('img')['name']);
 
                 // On instancie notre modèle
                 $post = new PostsModel();
@@ -132,7 +132,7 @@ class PostsController extends Controller
                     ->setTitle($title)
                     ->setBody($body)
                     ->setImg($img)
-                    ->setUserId($_SESSION['user']['id']);
+                    ->setUserId($this->session->get('user')['id']);
 
                 // On enregistre
                 $post->create();
@@ -190,7 +190,7 @@ class PostsController extends Controller
                 $title = strip_tags($this->global->get_POST('title'));
                 $chapo = strip_tags($this->global->get_POST('chapo'));
                 $body = strip_tags($this->global->get_POST('body'));
-                $img = strip_tags($_FILES['img']['name']) == '' ? $post->img : strip_tags($_FILES['img']['name']);
+                $img = strip_tags($this->global->get_FILE('img')['name'] == '' ? $post->img : strip_tags($this->global->get_FILE('img')['name']));
 
 
                 // On stocke l'post
