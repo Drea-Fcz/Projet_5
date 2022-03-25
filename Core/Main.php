@@ -55,9 +55,10 @@ class Main
             if(method_exists($controller, $action)){
                 // Si il reste des paramètres on les passe à la méthode
                 (isset($params[0])) ? call_user_func_array([$controller, $action], $params) : $controller->$action();
-            }
+            }else{
                 http_response_code(404);
-                return "La page recherchée n'existe pas";
+                echo "La page recherchée n'existe pas";
+            }
 
         }else{
             // On n'a pas de paramètres

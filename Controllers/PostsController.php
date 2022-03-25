@@ -145,12 +145,11 @@ class PostsController extends Controller
                 header('Location: ../posts');
             }
             // Le formulaire est incomplet
-            //$_SESSION['erreur'] = !empty($_POST) ? "Le formulaire est incomplet" : '';
-            $this->session->set('erreur', !empty($_POST) ? "Le formulaire est incomplet" : '');
+            $this->session->set('erreur', !empty($_POST) ? "The form is incomplete" : '');
             $title = isset($_POST['title']) ? strip_tags($this->global->get_POST('title')) : '';
             $chapo = isset($_POST['chapo']) ? strip_tags($this->global->get_POST('chapo')) : '';
             $body = isset($_POST['body']) ? strip_tags($this->global->get_POST('body')) : '';
-            $img = isset($_FILES['img']['name']) ? strip_tags($_FILES['img']['name']) : '';
+            $img = isset($_FILES['img']['name']) ? strip_tags($this->global->get_FILE('img')['name']) : '';
 
 
             $form = $this->postForm($chapo, $title, $body, $img);
@@ -197,7 +196,7 @@ class PostsController extends Controller
                 $postUpdate = new PostsModel();
 
                 // On hydrate
-                $postUpdate->setId(intval($post->id))
+                $postUpdate->setId($post->id)
                     ->setChapo($chapo)
                     ->setTitle($title)
                     ->setBody($body)
@@ -221,17 +220,16 @@ class PostsController extends Controller
             // On envoie à la vue
             $this->render('posts/edit', ['form' => $form->create()]);
 
-        } else {
+        }
             // L'utilisateur n'est pas connecté
             $this->session->set('error', 'You must be logged in to access this page');
 
             header('Location: users/login');
-        }
     }
 
     public function saveImg($file)
     {
-        //save picture
+        // enregistrer l'image
         if (isset($file['img']) && $file['img']['error'] == 0) {
             if ($file['img']['size'] <= 2000000) {
                 $fileInfo = pathinfo($file['img']['name']);

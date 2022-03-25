@@ -33,8 +33,7 @@ class UsersController extends Controller
             // Si l'utilisateur n'existe pas
             if(!$userArray){
                 // On envoie un message de session
-                $_SESSION['error'] = 'Incorrect e-mail address and/or password';
-                $this->session->set('error', 'You must be logged in to access this page');
+                $this->session->set('error', 'Incorrect e-mail address and/or password');
 
                 header('Location: login');
             }
