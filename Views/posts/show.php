@@ -5,14 +5,15 @@
     <div class="card bg-dark p-4">
         <div class="container">
             <div class="d-flex justify-content-center mx-5">
-                <img src="../../public/assets/upload/<?= $post->img ?>" alt="gravity" class="img-fluid p-2">
+                <img src="../../public/assets/upload/<?= htmlspecialchars_decode($post->img) ?>" alt="gravity" class="img-fluid p-2">
             </div>
             <div class="show-content">
                 <div class="d-flex justify-content-between">
                     <h1><?= $post->title ?></h1>
 
                         <div class="d-flex flex-row">
-                            <a href="<?= URL ?>/posts/edit/<?= $idPost ?>" class="btn a-tag color">
+                            <a href="<?= URL ?>/posts/edit/<?= htmlspecialchars_decode($idPost) ?>" class="btn a-tag color">
+
                                 <i class="fa fa-pencil" aria-hidden="true"></i></a>
 
                             <form action="<?= URL ?>/posts/delete/<?= $idPost ?>" method="POST">

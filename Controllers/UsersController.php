@@ -3,6 +3,7 @@
 namespace App\Controllers;
 
 use App\Core\Form;
+use App\Libraries\Session;
 use App\Libraries\SuperGlobal;
 use App\Models\UsersModel;
 
@@ -10,10 +11,12 @@ class UsersController extends Controller
 {
     private $form;
     private $global;
+    private $session;
 
     public function __construct(){
         $this->form = new Form();
         $this->global = new SuperGlobal();
+        $this->session = new Session();
     }
     /**
      * Connexion des utilisateurs
@@ -31,6 +34,8 @@ class UsersController extends Controller
             if(!$userArray){
                 // On envoie un message de session
                 $_SESSION['error'] = 'Incorrect e-mail address and/or password';
+                $this->session->set('error', 'You must be logged in to access this page');
+
                 header('Location: login');
                 exit;
             }
@@ -46,7 +51,7 @@ class UsersController extends Controller
                 header('Location: ../posts');
             }else{
                 // Mauvais mot de passe
-                $_SESSION['error'] = 'Incorrect e-mail address and/or password';
+                $this->session->set('error', 'Incorrect e-mail address and/or password');
                 header('Location: login');
             }
             exit;
@@ -98,7 +103,8 @@ class UsersController extends Controller
             // On stocke l'utilisateur
             $user->create();
             } else {
-                $_SESSION['error'] = 'The informations are not valid';
+                $this->session->set('error', 'The informations are not valid');
+
                 header('Location: register');
                 exit;
             }
