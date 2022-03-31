@@ -24,7 +24,6 @@
                         </div>
 
                 </div>
-
                 <p>
                     <?= $post->body ?>
                 </p>

@@ -55,10 +55,44 @@ class PostsController extends Controller
 
         $comments = $commentsModel->findByPostId($idPost);
 
+        // formulaire de commentaire
+        // On vérifie si l'utilisateur est connecté
+        if (isset($_SESSION['user']) && !empty($_SESSION['user']['id'])) {
+            // L'utilisateur est connecté
+            // On vérifie si le formulaire est complet
+            if (Form::validate($_POST, ['comment'])) {
 
-        // On envoie à la vue
-        $this->render('posts/show', ['post' => $post, 'comments' => $comments, 'idPost' => $idRedirect]);
+                $postComment = strip_tags($this->global->get_POST('comment'));
 
+                // On instancie notre modèle
+                $comment = new CommentsModel();
+
+
+                // On hydrate
+                $comment->setComment($postComment)
+                    ->setIsValid(0)
+                    ->setPostId($idPost)
+                    ->setAuthorId($this->session->get('user')['id']);
+
+                // On enregistre
+                $comment->create();
+
+                $this->session->set('message', 'Your comment has been successfully registered');
+            }
+            // Le formulaire est incomplet
+            $this->session->set('erreur', !empty($_POST) ? "The form is incomplete" : '');
+            $postComment = isset($_POST['comment']) ? strip_tags($this->global->get_POST('comment')) : '';
+
+
+            $form = $this->commentForm($postComment);
+
+            // On envoie à la vue
+            $this->render('posts/show', ['post' => $post, 'comments' => $comments, 'idPost' => $idRedirect, 'form' => $form->create()]);
+        } else {
+            // L'utilisateur n'est pas connecté
+            // On envoie à la vue
+            $this->render('posts/show', ['post' => $post, 'comments' => $comments, 'idPost' => $idRedirect]);
+        }
     }
 
     public function postForm($chapo, $title, $body, $img): Form
@@ -154,7 +188,7 @@ class PostsController extends Controller
 
             $form = $this->postForm($chapo, $title, $body, $img);
 
-            $this->render('posts/add', ['form' => $form->create()]);
+            $this->render('../posts/add', ['form' => $form->create()]);
 
         }
     }
@@ -220,12 +254,14 @@ class PostsController extends Controller
             // On envoie à la vue
             $this->render('posts/edit', ['form' => $form->create()]);
 
-        }
+        } else {
             // L'utilisateur n'est pas connecté
             $this->session->set('error', 'You must be logged in to access this page');
 
             header('Location: users/login');
+        }
     }
+
 
     public function saveImg($file)
     {
@@ -242,4 +278,29 @@ class PostsController extends Controller
         }
     }
 
+    /**
+     * @param string $comment
+     * @return Form
+     */
+    public function commentForm(string $comment): Form
+    {
+        $form = new Form();
+
+        $form->startForm('post', '#', ['class' => 'text-white'])
+            ->startDiv(['class' => 'form-group mb-3'])
+            ->addInput('text', 'comment', [
+                'id' => 'comment',
+                'class' => 'form-control',
+                'value' => $comment
+            ])
+            ->endDiv()
+            ->addInput('submit', 'submit', [
+                'id' => 'submit',
+                'class' => 'btn btn-outline-success btn-small ms-3',
+                'value' => 'Send'
+            ])
+            ->endForm();
+
+        return $form;
+    }
 }
