@@ -2,19 +2,24 @@
 
 namespace App\Controllers;
 
+use App\Core\Form;
+use App\Libraries\Session;
+use App\Libraries\SuperGlobal;
 use App\Models\CommentsModel;
 
 class CommentsController extends Controller
 {
-    public function index() {
+    private  $global;
+    private  $session;
 
-        $commentsModel = new CommentsModel();
-
-        $comments = $commentsModel->findBy(
-            [
-                "is_valid" => 0
-            ]
-        );
+    /**
+     *
+     */
+    public function __construct()
+    {
+        $this->global = new SuperGlobal();
+        $this->session = new Session();
     }
+
 
 }

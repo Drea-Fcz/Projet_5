@@ -2,20 +2,23 @@
 namespace App\Core;
 
 use App\Controllers\MainController;
+use App\Libraries\SuperGlobal;
 
 /**
  * Routeur principal
  */
 class Main
 {
+
     public function start()
     {
+        $global = new SuperGlobal();
         // On démarre la session
         session_start();
 
         // On retire le "trailing slash" éventuel de l'URL
         // On récupère l'URL
-        $uri = $_SERVER['REQUEST_URI'];
+        $uri = $global->get_SERVER('REQUEST_URI');
 
         // On vérifie que uri n'est pas vide et se termine par un /
         if(!empty($uri) && $uri[-1] === '/' && $uri[-1] != '/'){
@@ -30,13 +33,12 @@ class Main
         }
 
         // On gère les paramètres d'URL
-        // p=controleur/methode/paramètres
+        // p= contrôleur/methode/paramètres
         // On sépare les paramètres dans un tableau
         $params = [];
-        if(isset($_GET['p']))
-            $params = explode('/', $_GET['p']);
+        if($global->get_GET("p") !== null)
+            $params = explode('/', $global->get_GET("p"));
 
-        // var_dump($params);
         if($params[0] != ''){
             // On a au moins 1 paramètre
             // On récupère le nom du contrôleur à instancier
@@ -54,7 +56,7 @@ class Main
                 (isset($params[0])) ? call_user_func_array([$controller, $action], $params) : $controller->$action();
             }else{
                 http_response_code(404);
-                echo "La page recherchée n'existe pas";
+                echo json_encode("The page you are looking for does not exist");
             }
 
         }else{

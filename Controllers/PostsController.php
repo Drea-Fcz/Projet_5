@@ -3,11 +3,22 @@
 namespace App\Controllers;
 
 use App\Core\Form;
+use App\Libraries\Session;
+use App\Libraries\SuperGlobal;
 use App\Models\CommentsModel;
 use App\Models\PostsModel;
 
 class PostsController extends Controller
 {
+    private $global;
+    private $session;
+
+    public function __construct()
+    {
+        $this->global = new SuperGlobal();
+        $this->session = new Session();
+    }
+
     /**
      * @return void
      */
@@ -26,29 +37,62 @@ class PostsController extends Controller
 
     /**
      * Afficher un post
-     * @param int $id
+     * @param int $idPost
      * @return void
      */
-    public function show(int $id)
+    public function show(int $idPost)
     {
 
         // On instancie le modèle
         $postsModel = new PostsModel();
 
         // On va chercher 1 post
-        $post = $postsModel->find($id);
-        $idPost = intval($post->id);
+        $post = $postsModel->find($idPost);
+        $idRedirect = intval($post->id);
 
         // On récupère les commentaires valides du post
         $commentsModel = new CommentsModel();
 
-        $comments = $commentsModel->findByPostId($id);
+        $comments = $commentsModel->findByPostId($idPost);
+
+        // formulaire de commentaire
+        // On vérifie si l'utilisateur est connecté
+        if (isset($_SESSION['user']) && !empty($_SESSION['user']['id'])) {
+            // L'utilisateur est connecté
+            // On vérifie si le formulaire est complet
+            if (Form::validate($_POST, ['comment'])) {
+
+                $postComment = strip_tags($this->global->get_POST('comment'));
+
+                // On instancie notre modèle
+                $comment = new CommentsModel();
 
 
+                // On hydrate
+                $comment->setComment($postComment)
+                    ->setIsValid(0)
+                    ->setPostId($idPost)
+                    ->setAuthorId($this->session->get('user')['id']);
 
-        // On envoie à la vue
-        $this->render('posts/show', ['post' => $post, 'comments' => $comments, 'idPost' => $idPost]);
+                // On enregistre
+                $comment->create();
 
+                $this->session->set('message', 'Your comment has been successfully registered');
+            }
+            // Le formulaire est incomplet
+            $this->session->set('erreur', !empty($_POST) ? "The form is incomplete" : '');
+            $postComment = isset($_POST['comment']) ? strip_tags($this->global->get_POST('comment')) : '';
+
+
+            $form = $this->commentForm($postComment);
+
+            // On envoie à la vue
+            $this->render('posts/show', ['post' => $post, 'comments' => $comments, 'idPost' => $idRedirect, 'form' => $form->create()]);
+        } else {
+            // L'utilisateur n'est pas connecté
+            // On envoie à la vue
+            $this->render('posts/show', ['post' => $post, 'comments' => $comments, 'idPost' => $idRedirect]);
+        }
     }
 
     public function postForm($chapo, $title, $body, $img): Form
@@ -108,10 +152,10 @@ class PostsController extends Controller
                 // Le formulaire est complet
                 // On se protège contre les failles XSS
                 // strip_tags, htmlentities, htmlspecialchars
-                $title = strip_tags($_POST['title']);
-                $chapo = strip_tags($_POST['chapo']);
-                $body = strip_tags($_POST['body']);
-                $img = strip_tags($_FILES['img']['name']);
+                $title = strip_tags($this->global->get_POST('title'));
+                $chapo = strip_tags($this->global->get_POST('chapo'));
+                $body = strip_tags($this->global->get_POST('body'));
+                $img = strip_tags($this->global->get_FILE('img')['name']);
 
                 // On instancie notre modèle
                 $post = new PostsModel();
@@ -122,7 +166,7 @@ class PostsController extends Controller
                     ->setTitle($title)
                     ->setBody($body)
                     ->setImg($img)
-                    ->setUserId($_SESSION['user']['id']);
+                    ->setUserId($this->session->get('user')['id']);
 
                 // On enregistre
                 $post->create();
@@ -130,31 +174,30 @@ class PostsController extends Controller
                 $this->saveImg($_FILES);
 
                 // On redirige
-                $_SESSION['message'] = "Your post has been successfully registered";
+                $this->session->set('message', 'Your post has been successfully registered');
+
                 header('Location: ../posts');
-                exit;
-            } else {
-                // Le formulaire est incomplet
-                $_SESSION['erreur'] = !empty($_POST) ? "Le formulaire est incomplet" : '';
-                $title = isset($_POST['title']) ? strip_tags($_POST['title']) : '';
-                $chapo = isset($_POST['chapo']) ? strip_tags($_POST['chapo']) : '';
-                $body = isset($_POST['body']) ? strip_tags($_POST['body']) : '';
-                $img = isset($_FILES['img']['name']) ? strip_tags($_FILES['img']['name']) : '';
             }
+            // Le formulaire est incomplet
+            $this->session->set('erreur', !empty($_POST) ? "The form is incomplete" : '');
+            $title = isset($_POST['title']) ? strip_tags($this->global->get_POST('title')) : '';
+            $chapo = isset($_POST['chapo']) ? strip_tags($this->global->get_POST('chapo')) : '';
+            $body = isset($_POST['body']) ? strip_tags($this->global->get_POST('body')) : '';
+            $img = isset($_FILES['img']['name']) ? strip_tags($this->global->get_FILE('img')['name']) : '';
 
 
             $form = $this->postForm($chapo, $title, $body, $img);
 
-            $this->render('posts/add', ['form' => $form->create()]);
+            $this->render('../posts/add', ['form' => $form->create()]);
 
         }
     }
 
     /**
-     * @param int $id
+     * @param int $idPost
      * @return void
      */
-    public function edit(int $id)
+    public function edit(int $idPost)
     {
         // On vérifie si l'utilisateur est connecté
         if (isset($_SESSION['user']) && !empty($_SESSION['user']['id'])) {
@@ -164,30 +207,30 @@ class PostsController extends Controller
             $postsModel = new PostsModel();
 
             // On va chercher 1 post
-            $post = $postsModel->find($id);
+            $post = $postsModel->find($idPost);
 
             // Si l'post n'existe pas, on retourne à la liste des posts
             if (!$post) {
                 http_response_code(404);
-                $_SESSION['erreur'] = "The post you are looking for does not exist";
+                $this->session->set('erreur', 'The post you are looking for does not exist');
+
                 header('Location: /posts');
-                exit;
             }
 
             // On traite le formulaire
             if (Form::validate($_POST, ['chapo', 'title', 'body'])) {
                 // On se protège contre les failles XSS
-                $chapo = strip_tags($_POST['chapo']);
-                $title = strip_tags($_POST['title']);
-                $body = strip_tags($_POST['body']);
-                $img = strip_tags($_FILES['img']['name']) == '' ? $post->img : strip_tags($_FILES['img']['name']);
+                $title = strip_tags($this->global->get_POST('title'));
+                $chapo = strip_tags($this->global->get_POST('chapo'));
+                $body = strip_tags($this->global->get_POST('body'));
+                $img = strip_tags($this->global->get_FILE('img')['name'] == '' ? $post->img : strip_tags($this->global->get_FILE('img')['name']));
 
 
                 // On stocke l'post
                 $postUpdate = new PostsModel();
 
                 // On hydrate
-                $postUpdate->setId(intval($post->id))
+                $postUpdate->setId($post->id)
                     ->setChapo($chapo)
                     ->setTitle($title)
                     ->setBody($body)
@@ -200,9 +243,9 @@ class PostsController extends Controller
                 $this->saveImg($_FILES);
 
                 // On redirige
-                $_SESSION['message'] = "Your post has been successfully edited";
-                 header('Location: ../show/' . $post->id );
-                exit;
+                $this->session->set('message', 'Your post has been successfully edited');
+
+                header('Location: ../show/' . $post->id);
             }
 
 
@@ -213,26 +256,51 @@ class PostsController extends Controller
 
         } else {
             // L'utilisateur n'est pas connecté
-            $_SESSION['error'] = "You must be logged in to access this page";
-            header('Location: users/login');
-            exit;
+            $this->session->set('error', 'You must be logged in to access this page');
 
+            header('Location: users/login');
         }
     }
 
-    public function saveImg($file) {
-        //save picture
+
+    public function saveImg($file)
+    {
+        // enregistrer l'image
         if (isset($file['img']) && $file['img']['error'] == 0) {
             if ($file['img']['size'] <= 2000000) {
                 $fileInfo = pathinfo($file['img']['name']);
                 $extension = $fileInfo['extension'];
                 $allowedExtensions = ['jpg', 'jpeg', 'gif', 'png'];
                 if (in_array($extension, $allowedExtensions)) {
-                    move_uploaded_file($file['img']['tmp_name'], '' . $_SERVER['DOCUMENT_ROOT'] . '/poo/public/assets/upload/' . basename($_FILES['img']['name']));
-                    echo "Success !";
+                    move_uploaded_file($file['img']['tmp_name'], '' . $this->global->get_SERVER('DOCUMENT_ROOT') . '/poo/public/assets/upload/' . basename($_FILES['img']['name']));
                 }
             }
         }
     }
 
+    /**
+     * @param string $comment
+     * @return Form
+     */
+    public function commentForm(string $comment): Form
+    {
+        $form = new Form();
+
+        $form->startForm('post', '#', ['class' => 'text-white'])
+            ->startDiv(['class' => 'form-group mb-3'])
+            ->addInput('text', 'comment', [
+                'id' => 'comment',
+                'class' => 'form-control',
+                'value' => $comment
+            ])
+            ->endDiv()
+            ->addInput('submit', 'submit', [
+                'id' => 'submit',
+                'class' => 'btn btn-outline-success btn-small ms-3',
+                'value' => 'Send'
+            ])
+            ->endForm();
+
+        return $form;
+    }
 }

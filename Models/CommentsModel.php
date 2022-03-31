@@ -4,7 +4,7 @@ namespace App\Models;
 
 class CommentsModel extends Model
 {
-    protected $comment_id;
+    protected $id;
     protected $comment;
     protected $post_id;
     protected $comment_date;
@@ -19,22 +19,26 @@ class CommentsModel extends Model
 
     }
 
+    public function updateValidComment() {
+        $this->update();
+    }
+
     /**
      * @return mixed
      */
-    public function getCommentId()
+    public function getId()
     {
-        return $this->comment_id;
+        return $this->id;
     }
 
 
     /**
-     * @param $comment_id
+     * @param $id
      * @return $this
      */
-    public function setCommentId($comment_id)
+    public function setId($id): CommentsModel
     {
-        $this->comment_id = $comment_id;
+        $this->id = $id;
         return $this;
     }
 

@@ -1,6 +1,6 @@
 <div class="container-fluid">
     <div class="d-flex justify-content-end">
-        <a href="<?= URL ?>/posts/add" class="btn a-tag btn-sm color">
+        <a href="<?= htmlspecialchars_decode(URL) ?>/posts/add" class="btn a-tag btn-sm color">
             <i class="fa fa-pen fa-sm"></i> add post</a>
     </div>
 </div>
@@ -20,7 +20,7 @@
                     <div class="ps-4 pt-2">
                         <h6 class="card-title text-secondary text-uppercase"><?= $post->chapo ?></h6>
                     </div>
-                    <img src="assets/upload/<?= $post->img ?>" alt="photo"
+                    <img src="assets/upload/<?= htmlspecialchars_decode($post->img) ?>" alt="photo"
                          class="card-img-top d-flex align-item-center img-post p-2">
                     <div class="card-body text-white">
                         <h4 class="card-title"><?= $post->title ?></h4>
@@ -32,7 +32,7 @@
                         </p>
                     </div>
                     <div class="d-flex justify-content-end">
-                        <a href="posts/show/<?= $post->postId ?>"
+                        <a href="posts/show/<?= htmlspecialchars_decode($post->postId) ?>"
                            class="btn btn-card m-4">Read more</a>
                     </div>
                 </div>

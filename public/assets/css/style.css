@@ -203,6 +203,14 @@ h2{
      box-shadow: 0 1px 1px rgba(98, 98, 98, 0.89);
 }
 
+.comment_dark {
+     background-color: #252a2e !important;
+     padding: 0.4rem 0.2rem;
+     font-family: fangsong;
+     font-size: 0.9rem;
+     box-shadow: 0 1px 1px rgba(98, 98, 98, 0.89);
+}
+
 .bg-input-comment {
      background: #252a2e;
      border: none;
