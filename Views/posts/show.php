@@ -33,10 +33,7 @@
                     <div class="form-group">
                         <form  method="post">
                             <div class="d-flex justify-content-between">
-                                <input type="text" name="comment" class="form-control bg-input-comment text-white"
-                                       placeholder="Leave a comment">
-
-                                <input type="submit" value="Send" class="btn btn-outline-success btn-small ms-3">
+                                <?= $form ?>
                             </div>
                         </form>
                     </div>
