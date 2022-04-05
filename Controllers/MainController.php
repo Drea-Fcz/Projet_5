@@ -1,4 +1,5 @@
 <?php
+
 namespace App\Controllers;
 
 use App\Core\Form;
@@ -35,9 +36,23 @@ class MainController extends Controller
         $this->render('main/index', ['visitorForm' => $form->create()], 'home');
     }
 
-    public function send() {
-        $mail = new Mail();
-        $mail->send();
-        header('Location: main/index');
+    public function send()
+    {
+        if (Form::validate($_POST, ['firstname', 'lastname', 'message', 'email'])) {
+            $firstname = strip_tags($_POST['firstname']);
+            $lastname = strip_tags($_POST['lastname']);
+            $email = strip_tags($_POST['email']);
+            $message = strip_tags($_POST['message']);
+
+            $body = '
+      <p>Vous avez une nouvelle demande d\'information</p>
+       <p>Nom: ' . $firstname . ' ' . $lastname . '</p>
+       <p>Email : '. $email .'</p>
+       <p>Message : '. $message .'</p>
+     ';
+
+            $mail = new Mail();
+            $mail->send($body);
+        }
     }
 }
