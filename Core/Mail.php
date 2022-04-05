@@ -14,7 +14,7 @@ require '../vendor/phpmailer/phpmailer/src/SMTP.php';
 class Mail {
 
 
-    public function send() {
+    public function send($data) {
         $mail = new PHPMailer(true);
         try {
             //Server settings
@@ -31,16 +31,16 @@ class Mail {
             $mail->CharSet = "utf-8";
 
             //Recipients
-            $mail->setFrom('audrey.openclassroom@gmail.com', 'Mailer');
+            $mail->setFrom('audrey.openclassroom@gmail.com', 'OcBlog');
             $mail->addAddress('fcz.audrey@gmail.com', 'Audrey Fcz');     //Add a recipient
 
             //Content
             $mail->isHTML(true);                                  //Set email format to HTML
-            $mail->Subject = 'Here is the subject';
-            $mail->Body    = 'This is the HTML message body <b>in bold!</b>';
-            $mail->AltBody = 'This is the body in plain text for non-HTML mail clients';
+            $mail->Subject = 'Oc Blog Mailer';
+            $mail->Body    = $data;
 
             $mail->send();
+            header('Location: ../main');
             echo 'Message has been sent';
         } catch (Exception $e) {
             echo "Message could not be sent. Mailer Error: {$mail->ErrorInfo}";
