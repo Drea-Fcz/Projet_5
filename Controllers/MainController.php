@@ -2,13 +2,14 @@
 namespace App\Controllers;
 
 use App\Core\Form;
+use App\Core\Mail;
 
 class MainController extends Controller
 {
     public function index()
     {
         $form = new Form();
-        $form->startForm()
+        $form->startForm('POST', 'main/send')
             ->startDiv(['class' => 'row'])
             ->startDiv(['class' => 'col-md-6 mb-2'])
             ->addInput('text', 'firstname', ['class' => 'form-control shadow-box', 'id' => 'firstname', 'placeholder' => 'Firstname'])
@@ -31,7 +32,12 @@ class MainController extends Controller
             ->addBouton('Send', ['class' => 'bnt btn-outline-success btn-sm'])
             ->endDiv()
             ->endForm();
-
         $this->render('main/index', ['visitorForm' => $form->create()], 'home');
+    }
+
+    public function send() {
+        $mail = new Mail();
+        $mail->send();
+        header('Location: main/index');
     }
 }
