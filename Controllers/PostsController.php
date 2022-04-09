@@ -148,7 +148,7 @@ class PostsController extends Controller
         if (isset($_SESSION['user']) && !empty($_SESSION['user']['id'])) {
             // L'utilisateur est connecté
             // On vérifie si le formulaire est complet
-            if (Form::validate($_POST, ['title', 'chapo', 'body'])) {
+            if (Form::validate($this->global->get_POST(), ['title', 'chapo', 'body'])) {
                 // Le formulaire est complet
                 // On se protège contre les failles XSS
                 // strip_tags, htmlentities, htmlspecialchars
@@ -218,7 +218,7 @@ class PostsController extends Controller
             }
 
             // On traite le formulaire
-            if (Form::validate($_POST, ['chapo', 'title', 'body'])) {
+            if (Form::validate($this->global->get_POST(), ['chapo', 'title', 'body'])) {
                 // On se protège contre les failles XSS
                 $title = strip_tags($this->global->get_POST('title'));
                 $chapo = strip_tags($this->global->get_POST('chapo'));

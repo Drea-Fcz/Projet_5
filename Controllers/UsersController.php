@@ -24,7 +24,7 @@ class UsersController extends Controller
      */
     public function login(){
         // On vérifie si le formulaire est complet
-        if(Form::validate($_POST, ['email', 'password'])){
+        if(Form::validate($this->global->get_POST(), ['email', 'password'])){
             // Le formulaire est complet
             // On va chercher dans la base de données l'utilisateur avec l'email entré
             $usersModel = new UsersModel;
@@ -80,7 +80,7 @@ class UsersController extends Controller
     {
 
         // On vérifie si le formulaire est valide
-        if(Form::validate($_POST, ['name', 'email', 'password'])){
+        if(Form::validate($this->global->get_POST(), ['name', 'email', 'password'])){
             // Le formulaire est valide
             // On "nettoie" l'adresse email
             $email = strip_tags($this->global->get_POST('email'));
@@ -124,7 +124,7 @@ class UsersController extends Controller
             ->endDiv()
             ->endForm();
 
-        $this->render('users/register', ['registerForm' => $this->form->create(), 'error' => $this->error]);
+        $this->render('users/register', ['registerForm' => $this->form->create()]);
     }
 
     /**
