@@ -3,6 +3,7 @@
 namespace App\Core;
 
 
+use App\Libraries\Helper;
 use App\Libraries\Session;
 use PHPMailer\PHPMailer\Exception;
 use PHPMailer\PHPMailer\PHPMailer;
@@ -15,9 +16,11 @@ require '../vendor/phpmailer/phpmailer/src/SMTP.php';
 class Mail {
 
     private $session;
+    private $helper;
 
     public function __construct()
     {
+        $this->helper = new Helper();
         $this->session = new Session();
     }
 
@@ -48,7 +51,8 @@ class Mail {
             $mail->Body    = $data;
 
             $mail->send();
-            header('Location: ../main');
+            $this->helper->redirect('../main');
+
             $this->session->set('message','Message has been sent'); ;
         } catch (Exception $e) {
             $this->session->set('error','Message hasn\'t been sent');

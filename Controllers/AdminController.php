@@ -2,6 +2,7 @@
 
 namespace App\Controllers;
 
+use App\Libraries\Helper;
 use App\Libraries\Session;
 use App\Models\CommentsModel;
 use App\Models\PostsModel;
@@ -9,10 +10,12 @@ use App\Models\PostsModel;
 class AdminController extends Controller
 {
     private $session;
+    private $helper;
 
     public function __construct()
     {
         $this->session = new Session();
+        $this->helper = new Helper();
     }
 
     public function index()
@@ -46,7 +49,7 @@ class AdminController extends Controller
             );
 
             if (count($comments) == 0) {
-                header('Location: ../../admin');
+                $this->helper->redirect('../../admin');
             }
 
             $this->render('admin/comments', ['post' => $post, 'comments' => $comments], 'admin');
@@ -67,7 +70,7 @@ class AdminController extends Controller
 
         // On n'est pas admin
         $this->session->set('error', 'You do not have access to this area');
-        header('Location: main');
+        $this->helper->redirect('main');
     }
 
     public function validComment(int $idComment)
@@ -82,8 +85,7 @@ class AdminController extends Controller
 
                 $comment->setIsValid($comment->getIsValid() ? 0 : 1);
                 $comment->update();
-
-                header('Location: ../../admin/comments/' . $comment->getPostId());
+                $this->helper->redirect('../../admin/comments/' . $comment->getPostId());
             }
         }
     }
@@ -98,7 +100,7 @@ class AdminController extends Controller
         if ($this->isAdmin()) {
             $comment = new CommentsModel();
             $comment->delete($idComment);
-            header('Location: ../../admin');
+            $this->helper->redirect('../../admin');
         }
     }
 }

@@ -2,6 +2,7 @@
 namespace App\Core;
 
 use App\Controllers\MainController;
+use App\Libraries\Helper;
 use App\Libraries\SuperGlobal;
 
 /**
@@ -9,6 +10,12 @@ use App\Libraries\SuperGlobal;
  */
 class Main
 {
+    private $helper;
+
+    public function __construct()
+    {
+        $this->helper = new Helper();
+    }
 
     public function start()
     {
@@ -29,7 +36,7 @@ class Main
             http_response_code(301);
 
             // On redirige vers l'URL sans /
-            header('Location: '.$uri);
+            $this->helper->redirect($uri);
         }
 
         // On gère les paramètres d'URL

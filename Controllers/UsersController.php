@@ -3,6 +3,7 @@
 namespace App\Controllers;
 
 use App\Core\Form;
+use App\Libraries\Helper;
 use App\Libraries\Session;
 use App\Libraries\SuperGlobal;
 use App\Models\UsersModel;
@@ -12,11 +13,13 @@ class UsersController extends Controller
     private $form;
     private $global;
     private $session;
+    private $helper;
 
     public function __construct(){
         $this->form = new Form();
         $this->global = new SuperGlobal();
         $this->session = new Session();
+        $this->helper = new Helper();
     }
     /**
      * Connexion des utilisateurs
@@ -34,8 +37,7 @@ class UsersController extends Controller
             if(!$userArray){
                 // On envoie un message de session
                 $this->session->set('error', 'Incorrect e-mail address and/or password');
-
-                header('Location: login');
+                $this->helper->redirect('login');
             }
 
             // L'utilisateur existe
@@ -46,11 +48,11 @@ class UsersController extends Controller
                 // Le mot de passe est bon
                 // On crée la session
                 $user->setSession();
-                header('Location: ../posts');
+                $this->helper->redirect('../posts');
             }else{
                 // Mauvais mot de passe
                 $this->session->set('error', 'Incorrect e-mail address and/or password');
-                header('Location: login');
+                $this->helper->redirect('login');
             }
         }
 
@@ -102,7 +104,7 @@ class UsersController extends Controller
             } else {
                 $this->session->set('error', 'The informations are not valid');
 
-                header('Location: register');
+                $this->helper->redirect('register');
             }
         }
         $this->form->startForm()
@@ -133,6 +135,6 @@ class UsersController extends Controller
      */
     public function logout() {
         unset($_SESSION['user']);
-        header('Location: '. $this->global->get_SERVER('HTTP_REFERER'));
+        $this->helper->redirect($this->global->get_SERVER('HTTP_REFERER'));
     }
 }

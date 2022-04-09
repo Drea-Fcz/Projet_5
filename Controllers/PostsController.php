@@ -3,6 +3,7 @@
 namespace App\Controllers;
 
 use App\Core\Form;
+use App\Libraries\Helper;
 use App\Libraries\Session;
 use App\Libraries\SuperGlobal;
 use App\Models\CommentsModel;
@@ -12,11 +13,13 @@ class PostsController extends Controller
 {
     private $global;
     private $session;
+    private $helper;
 
     public function __construct()
     {
         $this->global = new SuperGlobal();
         $this->session = new Session();
+        $this->helper = new Helper();
     }
 
     /**
@@ -175,8 +178,8 @@ class PostsController extends Controller
 
                 // On redirige
                 $this->session->set('message', 'Your post has been successfully registered');
+                $this->helper->redirect('../posts');
 
-                header('Location: ../posts');
             }
             // Le formulaire est incomplet
             $this->session->set('erreur', !empty($_POST) ? "The form is incomplete" : '');
@@ -213,8 +216,7 @@ class PostsController extends Controller
             if (!$post) {
                 http_response_code(404);
                 $this->session->set('erreur', 'The post you are looking for does not exist');
-
-                header('Location: /posts');
+                $this->helper->redirect('/posts');
             }
 
             // On traite le formulaire
@@ -244,8 +246,7 @@ class PostsController extends Controller
 
                 // On redirige
                 $this->session->set('message', 'Your post has been successfully edited');
-
-                header('Location: ../show/' . $post->id);
+                $this->helper->redirect('../show/' . $post->id);
             }
 
 
@@ -257,8 +258,7 @@ class PostsController extends Controller
         } else {
             // L'utilisateur n'est pas connecté
             $this->session->set('error', 'You must be logged in to access this page');
-
-            header('Location: users/login');
+            $this->helper->redirect('users/login');
         }
     }
 
@@ -313,6 +313,6 @@ class PostsController extends Controller
     {
             $post = new PostsModel();
             $post->delete($idPost);
-            header('Location: ../../posts');
+        $this->helper->redirect('../../posts');
     }
 }
