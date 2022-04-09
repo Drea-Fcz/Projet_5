@@ -101,36 +101,4 @@ class AdminController extends Controller
             header('Location: ../../admin');
         }
     }
-
-    public function validComment(int $idComment)
-    {
-        // requête de validation des commentaires
-        if ($this->isAdmin()) {
-            $commentModel = new CommentsModel();
-            $commentArray = $commentModel->find($idComment);
-
-            if ($commentArray) {
-                $comment = $commentModel->hydrate($commentArray);
-
-                $comment->setIsValid($comment->getIsValid() ? 0 : 1);
-                $comment->update();
-
-                header('Location: ../../admin/comments/' . $comment->getPostId());
-            }
-        }
-    }
-
-    /**
-     * Supprimer le commentaire
-     * @param int $idComment
-     * @return void
-     */
-    public function delete(int $idComment)
-    {
-        if ($this->isAdmin()) {
-            $comment = new CommentsModel();
-            $comment->delete($idComment);
-            header('Location: ../../admin');
-        }
-    }
 }
