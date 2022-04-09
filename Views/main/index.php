@@ -7,7 +7,7 @@
                     <h2 class="m-0 flex-row"> </h2>
                     <span class="color mb-3">______</span>
                     <p class="m-0 small">Instagram | Linkedin</p>
-                    <button class=" mt-4 bnt btn-outline-success btn-sm">Curiculum vitae</button>
+                    <a class=" mt-4 bnt btn-outline-success btn-sm" href="public/assets/img/cv.pdf">Curiculum vitae</a>
                 </div>
             </div>
             <div class="col-md-6 col-xs-12 mt-5">
@@ -39,7 +39,7 @@
                         </p>
                         <div class="d-flex flex-row-reverse mb-3 col-12">
                            <span class="color">
-                               <button class="bnt btn-outline-success btn-sm">Read more</button>
+                               <a class="bnt btn-outline-success btn-sm a-tag" href="<?= URL ?>/posts">All posts</a>
                            </span>
                         </div>
                     </div>

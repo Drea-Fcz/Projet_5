@@ -188,7 +188,7 @@ class PostsController extends Controller
 
             $form = $this->postForm($chapo, $title, $body, $img);
 
-            $this->render('../posts/add', ['form' => $form->create()]);
+            $this->render('posts/add', ['form' => $form->create()]);
 
         }
     }
@@ -303,5 +303,16 @@ class PostsController extends Controller
             ->endForm();
 
         return $form;
+    }
+    /**
+     * Supprimer le commentaire
+     * @param int $idPost
+     * @return void
+     */
+    public function delete(int $idPost)
+    {
+            $post = new PostsModel();
+            $post->delete($idPost);
+            header('Location: ../../posts');
     }
 }

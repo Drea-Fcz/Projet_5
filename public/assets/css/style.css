@@ -36,6 +36,7 @@ h2{
 }
 
 .btn-outline-success {
+     text-decoration: none;
      padding: .8rem;
      color: #b79862;
      background-color: transparent;

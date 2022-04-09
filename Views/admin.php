@@ -25,8 +25,8 @@
         <div class="collapse navbar-collapse" id="navbarNav">
             <ul class="navbar-nav text-white ms-auto">
                 <li class="nav-item"><a class="nav-link" href="<?= URL ?>/main">Home</a></li>
+                <li class="nav-item"><a class="nav-link" href="<?= URL ?>/posts">Posts</a></li>
                 <li class="nav-item"><a class="nav-link" href="<?= URL ?>/admin">Dashboard</a></li>
-                <li class="nav-item"><a class="nav-link" href="<?= URL ?>/admin/user">Setting Users</a></li>
 
                 <?php if (isset($_SESSION['user']) && !empty($_SESSION['user']['id']) !== null) : ?>
                     <li class="nav-item"><a class="nav-link" href="<?= URL ?>/users/logout">Logout</a></li>
@@ -62,6 +62,5 @@
 <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.1.3/dist/js/bootstrap.bundle.min.js"
         integrity="sha384-ka7Sk0Gln4gmtz2MlQnikT1wXgYsOg+OMhuP+IlRH9sENBO0LRn5q+8nbTov4+1p"
         crossorigin="anonymous"></script>
-<!--<script src=<?php /*echo URL; */ ?>/public/assets/js/main.js"></script>-->
 </body>
 </html>

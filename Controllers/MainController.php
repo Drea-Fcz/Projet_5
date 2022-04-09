@@ -33,7 +33,7 @@ class MainController extends Controller
             ->addBouton('Send', ['class' => 'bnt btn-outline-success btn-sm'])
             ->endDiv()
             ->endForm();
-        $this->render('main/index', ['visitorForm' => $form->create()], 'home');
+        $this->render('main/index', ['visitorForm' => $form->create()], 'default');
     }
 
     public function send()
