@@ -4,9 +4,18 @@ namespace App\Controllers;
 
 use App\Core\Form;
 use App\Core\Mail;
+use App\Libraries\Session;
+use App\Libraries\SuperGlobal;
 
 class MainController extends Controller
 {
+    private $global;
+
+    public function __construct()
+    {
+        $this->global = new SuperGlobal();
+    }
+
     public function index()
     {
         $form = new Form();
@@ -39,10 +48,10 @@ class MainController extends Controller
     public function send()
     {
         if (Form::validate($_POST, ['firstname', 'lastname', 'message', 'email'])) {
-            $firstname = strip_tags($_POST['firstname']);
-            $lastname = strip_tags($_POST['lastname']);
-            $email = strip_tags($_POST['email']);
-            $message = strip_tags($_POST['message']);
+            $firstname = strip_tags($this->global->get_POST('firstname'));
+            $lastname = strip_tags($this->global->get_POST('lastname'));
+            $email = strip_tags($this->global->get_POST('email'));
+            $message = strip_tags($this->global->get_POST('message'));
 
             $body = '
       <p>Vous avez une nouvelle demande d\'information</p>
