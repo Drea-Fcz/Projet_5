@@ -4,7 +4,6 @@ namespace App\Controllers;
 
 use App\Core\Form;
 use App\Core\Mail;
-use App\Libraries\Session;
 use App\Libraries\SuperGlobal;
 
 class MainController extends Controller
@@ -47,7 +46,7 @@ class MainController extends Controller
 
     public function send()
     {
-        if (Form::validate($_POST, ['firstname', 'lastname', 'message', 'email'])) {
+        if (Form::validate($this->global->get_POST(), ['firstname', 'lastname', 'message', 'email'])) {
             $firstname = strip_tags($this->global->get_POST('firstname'));
             $lastname = strip_tags($this->global->get_POST('lastname'));
             $email = strip_tags($this->global->get_POST('email'));
