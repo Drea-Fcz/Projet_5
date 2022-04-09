@@ -1,8 +1,10 @@
 <div class="container-fluid">
+    <?php if (isset($_SESSION['user']['role']) && in_array('ROLE_ADMIN',$_SESSION['user']['role'])) : ?>
     <div class="d-flex justify-content-end">
         <a href="<?= htmlspecialchars_decode(URL) ?>/posts/add" class="btn a-tag btn-sm color">
             <i class="fa fa-pen fa-sm"></i> add post</a>
     </div>
+    <?php endif; ?>
 </div>
 <?php if (!empty($_SESSION['message'])) :?>
     <div class="d-flex justify-content-end">

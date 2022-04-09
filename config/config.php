@@ -19,6 +19,19 @@ const DB_PASS = 'root';
 const DB_NAME = 'OcBlog';
 
 /**
+ * mailer host
+ */
+const MAIL_HOST = 'smtp.gmail.com';
+/**
+ * mailer user
+ */
+const MAIL_USER = 'audrey.openclassroom@gmail.com';
+/**
+ * mailer pass
+ */
+const MAIL_PASS = 'OpenClassroom2022';
+
+/**
  *URL Root
  */
 const URL = 'http://localhost:8888/poo';

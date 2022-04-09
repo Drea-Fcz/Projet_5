@@ -12,10 +12,10 @@ class Db extends PDO
     private static $instance;
 
     // Informations de connexion
-    private const DBHOST = 'localhost';
-    private const DBUSER = 'root';
-    private const DBPASS = 'root';
-    private const DBNAME = 'OcBlog';
+    private const DBHOST = DB_HOST;
+    private const DBUSER = DB_USER;
+    private const DBPASS = DB_PASS;
+    private const DBNAME = DB_NAME;
 
     public function __construct()
     {

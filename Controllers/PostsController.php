@@ -286,19 +286,20 @@ class PostsController extends Controller
     {
         $form = new Form();
 
-        $form->startForm('post', '#', ['class' => 'text-white'])
-            ->startDiv(['class' => 'form-group mb-3'])
+        $form->startForm('post', '#')
+            ->startDiv(['class' => 'd-flex justify-content-between'])
             ->addInput('text', 'comment', [
                 'id' => 'comment',
-                'class' => 'form-control',
-                'value' => $comment
+                'class' => 'form-control bg-input-comment text-white',
+                'value' => $comment,
+                'placeholder' => 'Leave a comment',
             ])
-            ->endDiv()
             ->addInput('submit', 'submit', [
                 'id' => 'submit',
                 'class' => 'btn btn-outline-success btn-small ms-3',
                 'value' => 'Send'
             ])
+            ->endDiv()
             ->endForm();
 
         return $form;
