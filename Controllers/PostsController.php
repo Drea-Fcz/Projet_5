@@ -60,7 +60,7 @@ class PostsController extends Controller
         if (isset($_SESSION['user']) && !empty($_SESSION['user']['id'])) {
             // L'utilisateur est connecté
             // On vérifie si le formulaire est complet
-            if (Form::validate($_POST, ['comment'])) {
+            if (Form::validate($this->global->get_POST(), ['comment'])) {
 
                 $postComment = strip_tags($this->global->get_POST('comment'));
 
@@ -81,7 +81,7 @@ class PostsController extends Controller
             }
             // Le formulaire est incomplet
             $this->session->set('erreur', !empty($_POST) ? "The form is incomplete" : '');
-            $postComment = isset($_POST['comment']) ? strip_tags($this->global->get_POST('comment')) : '';
+            $postComment = $this->global->get_POST('comment') !== null ? strip_tags($this->global->get_POST('comment')) : '';
 
 
             $form = $this->commentForm($postComment);
@@ -180,10 +180,10 @@ class PostsController extends Controller
             }
             // Le formulaire est incomplet
             $this->session->set('erreur', !empty($_POST) ? "The form is incomplete" : '');
-            $title = isset($_POST['title']) ? strip_tags($this->global->get_POST('title')) : '';
-            $chapo = isset($_POST['chapo']) ? strip_tags($this->global->get_POST('chapo')) : '';
-            $body = isset($_POST['body']) ? strip_tags($this->global->get_POST('body')) : '';
-            $img = isset($_FILES['img']['name']) ? strip_tags($this->global->get_FILE('img')['name']) : '';
+            $title = $this->global->get_POST('title') !== null ? strip_tags($this->global->get_POST('title')) : '';
+            $chapo = $this->global->get_POST('chapo') !== null ? strip_tags($this->global->get_POST('chapo')) : '';
+            $body = $this->global->get_POST('body') !== null ? strip_tags($this->global->get_POST('body')) : '';
+            $img = $this->global->get_FILE('img')['name'] !== null ? strip_tags($this->global->get_FILE('img')['name']) : '';
 
 
             $form = $this->postForm($chapo, $title, $body, $img);
@@ -240,7 +240,7 @@ class PostsController extends Controller
                 $postUpdate->update();
 
                 //save picture
-                $this->saveImg($_FILES);
+                $this->saveImg($this->global->get_FILE());
 
                 // On redirige
                 $this->session->set('message', 'Your post has been successfully edited');
