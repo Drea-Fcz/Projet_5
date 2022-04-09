@@ -1,5 +1,6 @@
 <h1 align="center" style="color: #b79862; box-shadow: rgba(0, 0, 0, 0.02) 0px 1px 3px 0px, rgba(27, 31, 35, 0.15) 0px 0px 0px 1px; ">
 Projet 5 OpenClassrooms
+[![Codacy Badge](https://app.codacy.com/project/badge/Grade/2f4fe7dae7c8470fa179acdfe2f34544)](https://www.codacy.com/gh/Fcz-kc/Projet_5/dashboard?utm_source=github.com&amp;utm_medium=referral&amp;utm_content=Fcz-kc/Projet_5&amp;utm_campaign=Badge_Grade)
 </h1>
  <h3 align="center">Création d'un Blog via une architecture MVC Orienté objet.</h3>
 
