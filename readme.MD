@@ -67,6 +67,10 @@ _Suivez les instructions suivantes :
    const DB_USER = 'ENTER YOUR USERNAME';
    const DB_PASS = 'ENTER YOUR PASSWORD';
    const DB_NAME = 'OcBlog';
+   
+   const MAIL_HOST = 'ENTER YOUR HOST';
+   const MAIL_USER = 'ENTER YOUR USERNAME';
+   const MAIL_PASS = 'ENTER YOUR PASSWORD';
    ```
 
 5. Remplir le fichier App/Config/mail.exemple.php avec les accès à votre compte email.
@@ -76,12 +80,12 @@ _Suivez les instructions suivantes :
 
 ### Utilisateur :
 <ul>
-<li>Identifiant: TODO</li>
-<li>Mot de passe: TODO</li>
+<li>Identifiant: audrey@gmail.com</li>
+<li>Mot de passe: azerty</li>
 </ul> 
 
 ### Administrateur :
 <ul>
-<li>Identifiant: TODO</li>
-<li>Mot de passe: TODO</li>
+<li>Identifiant: cassie@gmail.com</li>
+<li>Mot de passe: azerty</li>
 </ul>
