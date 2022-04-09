@@ -57,7 +57,7 @@ class PostsController extends Controller
 
         // formulaire de commentaire
         // On vérifie si l'utilisateur est connecté
-        if (isset($_SESSION['user']) && !empty($_SESSION['user']['id'])) {
+        if ($this->session->get('user') !== null && $this->session->get('user')['id'] !== null) {
             // L'utilisateur est connecté
             // On vérifie si le formulaire est complet
             if (Form::validate($this->global->get_POST(), ['comment'])) {
@@ -145,7 +145,7 @@ class PostsController extends Controller
     {
 
         // On vérifie si l'utilisateur est connecté
-        if (isset($_SESSION['user']) && !empty($_SESSION['user']['id'])) {
+        if ($this->session->get('user') !== null && $this->session->get('user')['id'] !== null) {
             // L'utilisateur est connecté
             // On vérifie si le formulaire est complet
             if (Form::validate($this->global->get_POST(), ['title', 'chapo', 'body'])) {
@@ -171,7 +171,7 @@ class PostsController extends Controller
                 // On enregistre
                 $post->create();
                 //save picture
-                $this->saveImg($_FILES);
+                $this->saveImg($this->global->get_FILE());
 
                 // On redirige
                 $this->session->set('message', 'Your post has been successfully registered');
@@ -200,7 +200,7 @@ class PostsController extends Controller
     public function edit(int $idPost)
     {
         // On vérifie si l'utilisateur est connecté
-        if (isset($_SESSION['user']) && !empty($_SESSION['user']['id'])) {
+        if ($this->session->get('user') !== null && $this->session->get('user')['id'] !== null) {
             // On va vérifier si l'post existe dans la base
             // On instancie notre modèle
             // On instancie le modèle

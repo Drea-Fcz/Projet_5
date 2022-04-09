@@ -60,7 +60,7 @@ class AdminController extends Controller
     private function isAdmin()
     {
         // On vérifie si on est connecté et si "ROLE_ADMIN" est dans nos rôles
-        if (isset($_SESSION['user']) && in_array('ROLE_ADMIN', $_SESSION['user']['role'])) {
+        if ($this->session->get('user') !== null && in_array('ROLE_ADMIN', $_SESSION['user']['role'])) {
             // On est admin
             return true;
         }
