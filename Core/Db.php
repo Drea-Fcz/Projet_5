@@ -30,8 +30,9 @@ class Db extends PDO
             $this->setAttribute(PDO::ATTR_DEFAULT_FETCH_MODE, PDO::FETCH_OBJ);
             $this->setAttribute(PDO::ATTR_ERRMODE, PDO::ERRMODE_EXCEPTION);
         }catch(PDOException $e){
-            echo $e->getMessage();
+            return  $e->getMessage();
         }
+        return $this;
     }
 
 
