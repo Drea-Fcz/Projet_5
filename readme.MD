@@ -5,6 +5,9 @@ Projet 5 OpenClassrooms
 
 
 ## À propos
+
+[![Codacy Badge](https://api.codacy.com/project/badge/Grade/d8ca7c9a4ab64577954e4c31dc4281be)](https://app.codacy.com/gh/Fcz-kc/Projet_5?utm_source=github.com&utm_medium=referral&utm_content=Fcz-kc/Projet_5&utm_campaign=Badge_Grade_Settings)
+
 Voici les principales fonctionnalités disponibles en fonction des différents statuts d'utilisateur :
 <h5>Visiteur:</h5>
 <ul>
