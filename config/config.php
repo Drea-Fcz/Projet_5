@@ -25,11 +25,11 @@ const MAIL_HOST = 'smtp.gmail.com';
 /**
  * mailer user
  */
-const MAIL_USER = 'enter your mail';
+const MAIL_USER = 'audrey.openclassroom@gmail.com';
 /**
  * mailer pass
  */
-const MAIL_PASS = 'enter your password';
+const MAIL_PASS = 'OpenClassroom2022';
 
 /**
  *URL Root
