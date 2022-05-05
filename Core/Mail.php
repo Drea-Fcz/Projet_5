@@ -43,7 +43,7 @@ class Mail {
 
             //Recipients
             $mail->setFrom('audrey.openclassroom@gmail.com', 'OcBlog');
-            $mail->addAddress('fcz.audrey@gmail.com', 'Audrey Fcz');     //Add a recipient
+            $mail->addAddress('zlj68484@jeoce.com', 'Audrey Fcz');     //Add a recipient
 
             //Content
             $mail->isHTML(true);                                  //Set email format to HTML
