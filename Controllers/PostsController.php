@@ -186,7 +186,7 @@ class PostsController extends Controller
             $title = $this->global->get_POST('title') !== null ? strip_tags($this->global->get_POST('title')) : '';
             $chapo = $this->global->get_POST('chapo') !== null ? strip_tags($this->global->get_POST('chapo')) : '';
             $body = $this->global->get_POST('body') !== null ? strip_tags($this->global->get_POST('body')) : '';
-            $img = $this->global->get_FILE('img')['name'] !== null ? strip_tags($this->global->get_FILE('img')['name']) : '';
+            $img = $this->global->get_FILE('img') !== null ? strip_tags($this->global->get_FILE('img')['name']) : '';
 
 
             $form = $this->postForm($chapo, $title, $body, $img);
@@ -304,6 +304,7 @@ class PostsController extends Controller
 
         return $form;
     }
+
     /**
      * Supprimer le commentaire
      * @param int $idPost
@@ -311,8 +312,8 @@ class PostsController extends Controller
      */
     public function delete(int $idPost)
     {
-            $post = new PostsModel();
-            $post->delete($idPost);
+        $post = new PostsModel();
+        $post->delete($idPost);
         $this->helper->redirect('../../posts');
     }
 }
