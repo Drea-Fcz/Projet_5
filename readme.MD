@@ -80,12 +80,12 @@ _Suivez les instructions suivantes :
 
 ### Utilisateur :
 <ul>
-<li>Identifiant: audrey@gmail.com</li>
+<li>Identifiant: fcz.audrey@gmail.com</li>
 <li>Mot de passe: azerty</li>
 </ul> 
 
 ### Administrateur :
 <ul>
-<li>Identifiant: cassie@gmail.com</li>
+<li>Identifiant: fcz.cassie@gmail.com</li>
 <li>Mot de passe: azerty</li>
 </ul>
