@@ -8,33 +8,33 @@ const DB_HOST = 'localhost';
 /**
  * db user
  */
-const DB_USER = 'root';
+const DB_USER = '#####';
 /**
  *db pass
  */
-const DB_PASS = 'root';
+const DB_PASS = '#####';
 /**
  * db name
  */
-const DB_NAME = 'OcBlog';
+const DB_NAME = '####';
 
 /**
  * mailer host
  */
-const MAIL_HOST = 'smtp.gmail.com';
+const MAIL_HOST = '#####';
 /**
  * mailer user
  */
-const MAIL_USER = 'audrey.openclassroom@gmail.com';
+const MAIL_USER = '#####';
 /**
  * mailer pass
  */
-const MAIL_PASS = 'OpenClassroom2022';
+const MAIL_PASS = '#####';
 
 /**
  *URL Root
  */
-const URL = 'http://localhost:8888/poo';
+const URL = '#####';
 
 /**
  * Site Name
