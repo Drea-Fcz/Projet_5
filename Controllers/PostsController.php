@@ -64,8 +64,8 @@ class PostsController extends Controller
             // L'utilisateur est connecté
             // On vérifie si le formulaire est complet
             if (Form::validate($this->global->get_POST(), ['comment'])) {
-
-                $postComment = strip_tags($this->global->get_POST('comment'));
+                $safePost = filter_input_array(INPUT_POST, FILTER_SANITIZE_STRING);
+                $postComment = strip_tags($safePost['comment']);
 
                 // On instancie notre modèle
                 $comment = new CommentsModel();
@@ -133,7 +133,7 @@ class PostsController extends Controller
             ])
             ->endDiv()
             ->startDiv(['class' => 'd-flex justify-content-end'])
-            ->addAnchorTag('../posts', 'Cancel', ['class' => 'btn btn-outline-cancel me-3'])
+            ->addAnchorTag('../show', 'Cancel', ['class' => 'btn btn-outline-cancel me-3'])
             ->addBouton('Submit', ['value' => 'Submit', 'class' => 'btn btn-outline-success'])
             ->endDiv()
             ->endForm();
@@ -152,12 +152,18 @@ class PostsController extends Controller
             // L'utilisateur est connecté
             // On vérifie si le formulaire est complet
             if (Form::validate($this->global->get_POST(), ['title', 'chapo', 'body'])) {
+                $safePost = filter_input_array(INPUT_POST, [
+                    "title" => FILTER_SANITIZE_STRING,
+                    "chapo" => FILTER_SANITIZE_STRING,
+                    "body" => FILTER_SANITIZE_STRING
+                ]);
+
                 // Le formulaire est complet
                 // On se protège contre les failles XSS
                 // strip_tags, htmlentities, htmlspecialchars
-                $title = strip_tags($this->global->get_POST('title'));
-                $chapo = strip_tags($this->global->get_POST('chapo'));
-                $body = strip_tags($this->global->get_POST('body'));
+                $title = strip_tags($safePost['title']);
+                $chapo = strip_tags($safePost['chapo']);
+                $body = strip_tags($safePost['body']);
                 $img = strip_tags($this->global->get_FILE('img')['name']);
 
                 // On instancie notre modèle
@@ -221,10 +227,16 @@ class PostsController extends Controller
 
             // On traite le formulaire
             if (Form::validate($this->global->get_POST(), ['chapo', 'title', 'body'])) {
+                $safePost = filter_input_array(INPUT_POST, [
+                    "title" => FILTER_SANITIZE_STRING,
+                    "chapo" => FILTER_SANITIZE_STRING,
+                    "body" => FILTER_SANITIZE_STRING
+                ]);
+
                 // On se protège contre les failles XSS
-                $title = strip_tags($this->global->get_POST('title'));
-                $chapo = strip_tags($this->global->get_POST('chapo'));
-                $body = strip_tags($this->global->get_POST('body'));
+                $title = strip_tags($safePost['title']);
+                $chapo = strip_tags($safePost['chapo']);
+                $body = strip_tags($safePost['body']);
                 $img = strip_tags($this->global->get_FILE('img')['name'] == '' ? $post->img : strip_tags($this->global->get_FILE('img')['name']));
 
 
