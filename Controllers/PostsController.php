@@ -27,7 +27,6 @@ class PostsController extends Controller
      */
     public function index()
     {
-
         // On instancie le modèle correspondant à la table 'posts'
         $postsModel = new PostsModel();
 
@@ -60,7 +59,7 @@ class PostsController extends Controller
 
         // formulaire de commentaire
         // On vérifie si l'utilisateur est connecté
-        if ($this->session->get('user') !== null && $this->session->get('user')['id'] !== null) {
+        if ($this->global->get_SESSION()) {
             // L'utilisateur est connecté
             // On vérifie si le formulaire est complet
             if (Form::validate($this->global->get_POST(), ['comment'])) {

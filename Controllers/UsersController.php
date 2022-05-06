@@ -145,7 +145,8 @@ class UsersController extends Controller
      */
     public function logout()
     {
-        unset($_SESSION['user']);
+        session_destroy();
+        // unset($_SESSION['user']);
         $this->helper->redirect($this->global->get_SERVER('HTTP_REFERER'));
     }
 }
