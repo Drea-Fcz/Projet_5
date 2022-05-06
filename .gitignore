@@ -4,3 +4,6 @@
 
 ###> Composer/files ###
 /vendor/
+
+###> config/files ###
+/config/
