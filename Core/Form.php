@@ -7,15 +7,6 @@ class Form
     private $formCode = '';
 
     /**
-     * génère le formulaire Html
-     * @return string
-     */
-    public function create(): string
-    {
-        return $this->formCode;
-    }
-
-    /**
      * Valide si tous les champs proposé sont remplis
      * @param array $form tableau issus du formulaire ($_POST | $_GET
      * @param array $fields
@@ -35,30 +26,12 @@ class Form
     }
 
     /**
-     * Ajouts des attributs envoyés à la balise
-     * @param array $attributes Tableau associatif [ 'class' => 'form-control', 'required' => true]
+     * génère le formulaire Html
      * @return string
      */
-    public function addAttributes(array $attributes): string
+    public function create(): string
     {
-        // On initialise une chaine de caractères
-        $str = '';
-
-        // on liste les attributs "courts"
-        $shorts = ['checked', 'disabled', 'readonly', 'multiple', 'required', 'autofocus', 'novalidate', 'formnovalidate'];
-
-        // On boucle sur le tableau d'attributs
-        foreach($attributes as $attribute => $value){
-            // Si l'attribut est dans la liste des attributs courts
-            if(in_array($attribute, $shorts) && $value == true){
-                $str .= " $attribute";
-            }else{
-                // On ajoute attribut='valeur'
-                $str .= " $attribute=\"$value\"";
-            }
-        }
-
-        return $str;
+        return $this->formCode;
     }
 
     /**
@@ -74,16 +47,43 @@ class Form
         $this->formCode .= "<form action='$action' method='$method'";
 
         // On ajoute les attributs éventuels
-        $this->formCode .= $attributes ? $this->addAttributes($attributes).'>' : '>';
+        $this->formCode .= $attributes ? $this->addAttributes($attributes) . '>' : '>';
 
         return $this;
+    }
+
+    /**
+     * Ajouts des attributs envoyés à la balise
+     * @param array $attributes Tableau associatif [ 'class' => 'form-control', 'required' => true]
+     * @return string
+     */
+    public function addAttributes(array $attributes): string
+    {
+        // On initialise une chaine de caractères
+        $str = '';
+
+        // on liste les attributs "courts"
+        $shorts = ['checked', 'disabled', 'readonly', 'multiple', 'required', 'autofocus', 'novalidate', 'formnovalidate'];
+
+        // On boucle sur le tableau d'attributs
+        foreach ($attributes as $attribute => $value) {
+            // Si l'attribut est dans la liste des attributs courts
+            if (in_array($attribute, $shorts) && $value == true) {
+                $str .= " $attribute";
+            } else {
+                // On ajoute attribut='valeur'
+                $str .= " $attribute=\"$value\"";
+            }
+        }
+
+        return $str;
     }
 
     /**
      * Balise de fermeture du formulaire
      * @return Form
      */
-    public function endForm():self
+    public function endForm(): self
     {
         $this->formCode .= '</form>';
         return $this;
@@ -96,7 +96,7 @@ class Form
      * @param array $attributes
      * @return Form
      */
-    public function addLabelFor(string $for, string $text, array $attributes = []):self
+    public function addLabelFor(string $for, string $text, array $attributes = []): self
     {
         // On ouvre la balise
         $this->formCode .= "<label for='$for'";
@@ -109,6 +109,7 @@ class Form
 
         return $this;
     }
+
     /**
      * Ajout d'un champ input
      * @param string $type
@@ -116,13 +117,13 @@ class Form
      * @param array $attributes
      * @return Form
      */
-    public function addInput(string $type, string $name, array $attributes = []):self
+    public function addInput(string $type, string $name, array $attributes = []): self
     {
         // On ouvre la balise
         $this->formCode .= "<input type='$type' name='$name'";
 
         // On ajoute les attributs
-        $this->formCode .= $attributes ? $this->addAttributes($attributes).'>' : '>';
+        $this->formCode .= $attributes ? $this->addAttributes($attributes) . '>' : '>';
 
         return $this;
     }
@@ -134,7 +135,7 @@ class Form
      * @param array $attributes Attributs
      * @return Form Retourne l'objet
      */
-    public function addTextarea(string $name, string $value = '', array $attributes = []):self
+    public function addTextarea(string $name, string $value = '', array $attributes = []): self
     {
         // On ouvre la balise
         $this->formCode .= "<textarea name='$name'";
@@ -155,7 +156,7 @@ class Form
      * @param array $attributes
      * @return Form
      */
-    public function addBouton(string $text, array $attributes = []):self
+    public function addBouton(string $text, array $attributes = []): self
     {
         // On ouvre le bouton
         $this->formCode .= '<button ';
@@ -174,13 +175,13 @@ class Form
      * @param array $attributes Attributs
      * @return Form
      */
-    public function startDiv( array $attributes = []): self
+    public function startDiv(array $attributes = []): self
     {
         // On crée la balise div
         $this->formCode .= "<div";
 
         // On ajoute les attributs éventuels
-        $this->formCode .= $attributes ? $this->addAttributes($attributes).'>' : '>';
+        $this->formCode .= $attributes ? $this->addAttributes($attributes) . '>' : '>';
 
         return $this;
     }
@@ -189,7 +190,7 @@ class Form
      * Balise de fermeture du formulaire
      * @return Form
      */
-    public function endDiv():self
+    public function endDiv(): self
     {
         $this->formCode .= '</div>';
         return $this;
@@ -200,13 +201,13 @@ class Form
      * @param array $attributes Attributs
      * @return Form
      */
-    public function startSpan( array $attributes = []): self
+    public function startSpan(array $attributes = []): self
     {
         // On crée la balise div
         $this->formCode .= "<span";
 
         // On ajoute les attributs éventuels
-        $this->formCode .= $attributes ? $this->addAttributes($attributes).'>' : '>';
+        $this->formCode .= $attributes ? $this->addAttributes($attributes) . '>' : '>';
 
         return $this;
     }
@@ -216,9 +217,9 @@ class Form
      * @param $value
      * @return Form
      */
-    public function endSpan($value):self
+    public function endSpan($value): self
     {
-        $this->formCode .= $value .'</span>';
+        $this->formCode .= $value . '</span>';
         return $this;
     }
 
@@ -229,13 +230,13 @@ class Form
      * @param array $attributes Attributs
      * @return Form
      */
-    public function addAnchorTag(string $path, string $text,array $attributes = []): self
+    public function addAnchorTag(string $path, string $text, array $attributes = []): self
     {
         // On crée la balise a
         $this->formCode .= "<a href='$path'";
 
         // On ajoute les attributs éventuels
-        $this->formCode .= $attributes ? $this->addAttributes($attributes).'>'. $text .'</a>': '>'. $text .'</a>';
+        $this->formCode .= $attributes ? $this->addAttributes($attributes) . '>' . $text . '</a>' : '>' . $text . '</a>';
 
         return $this;
     }

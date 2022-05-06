@@ -31,26 +31,28 @@
                 <?php if (isset($_SESSION['user']) && !empty($_SESSION['user']['id']) !== null) : ?>
                     <li class="nav-item"><a class="nav-link" href="<?= URL ?>/users/logout">Logout</a></li>
                 <?php else : ?>
-                <li class="nav-item"><a class="nav-link" href="<?= URL ?>/users/login">Login</a></li>
-                <li class="nav-item"><a class="nav-link" href="<?= URL ?>/users/register">Register</a></li>
+                    <li class="nav-item"><a class="nav-link" href="<?= URL ?>/users/login">Login</a></li>
+                    <li class="nav-item"><a class="nav-link" href="<?= URL ?>/users/register">Register</a></li>
                 <?php endif; ?>
 
             </ul>
         </div>
     </div>
 </nav>
-<?php if (!empty($_SESSION['error'])) :?>
+<?php if (!empty($_SESSION['error'])) : ?>
     <div class="d-flex justify-content-end">
         <div class="alert alert-danger alert-dismissible fade show mt-3" role="alert">
-            <?php echo $_SESSION['error']; unset($_SESSION['error']) ?>
+            <?php echo $_SESSION['error'];
+            unset($_SESSION['error']) ?>
             <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
         </div>
     </div>
 <?php endif; ?>
-<?php if (!empty($_SESSION['message'])) :?>
+<?php if (!empty($_SESSION['message'])) : ?>
     <div class="d-flex justify-content-end mt-2">
         <div class="alert alert-success alert-dismissible fade show mt-3" role="alert">
-            <?php echo $_SESSION['message']; unset($_SESSION['message']) ?>
+            <?php echo $_SESSION['message'];
+            unset($_SESSION['message']) ?>
             <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
         </div>
     </div>

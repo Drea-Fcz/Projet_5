@@ -25,6 +25,27 @@ class Model extends Db
     }
 
     /**
+     * @param string $sql
+     * @param array|null $attributes
+     * @return false|PDOStatement
+     */
+    public function request(string $sql, array $attributes = null)
+    {
+        // On récupère l'instance de Db
+        $this->db = Db::getInstance();
+        // On vérifie si on a des attributs
+        if ($attributes !== null) {
+            // Requête préparée
+            $query = $this->db->prepare($sql);
+            $query->execute($attributes);
+            return $query;
+        } else {
+            // Requête simple
+            return $this->db->query($sql);
+        }
+    }
+
+    /**
      * @param array $criteria
      * @return array|false
      */
@@ -118,29 +139,6 @@ class Model extends Db
         return $this->request("DELETE FROM {$this->table} WHERE id = ?", [$id]);
     }
 
-
-    /**
-     * @param string $sql
-     * @param array|null $attributes
-     * @return false|PDOStatement
-     */
-    public function request(string $sql, array $attributes = null)
-    {
-        // On récupère l'instance de Db
-        $this->db = Db::getInstance();
-        // On vérifie si on a des attributs
-        if ($attributes !== null) {
-            // Requête préparée
-            $query = $this->db->prepare($sql);
-            $query->execute($attributes);
-            return $query;
-        } else {
-            // Requête simple
-            return $this->db->query($sql);
-        }
-    }
-
-
     /**
      * @param $data
      * @return $this
@@ -152,7 +150,7 @@ class Model extends Db
             // On récupère le nom du setter correspondant à la clé (key)
             // titre -> setTitre
             $key = ucwords($key, '_');
-            $cleanKey = str_replace('_', '',$key);
+            $cleanKey = str_replace('_', '', $key);
 
             $setter = 'set' . ucfirst($cleanKey);
 

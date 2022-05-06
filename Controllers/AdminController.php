@@ -31,6 +31,23 @@ class AdminController extends Controller
     }
 
     /**
+     * Vérifie si je suis administrateur
+     * @return bool|void
+     */
+    private function isAdmin()
+    {
+        // On vérifie si on est connecté et si "ROLE_ADMIN" est dans nos rôles
+        if ($this->session->get('user') !== null && in_array('ROLE_ADMIN', $_SESSION['user']['role'])) {
+            // On est admin
+            return true;
+        }
+
+        // On n'est pas admin
+        $this->session->set('error', 'You do not have access to this area');
+        $this->helper->redirect('main');
+    }
+
+    /**
      * Affiche la liste des annonces sous forme de tableau
      **/
     public function comments($idComment)
@@ -54,23 +71,6 @@ class AdminController extends Controller
 
             $this->render('admin/comments', ['post' => $post, 'comments' => $comments], 'admin');
         }
-    }
-
-    /**
-     * Vérifie si je suis administrateur
-     * @return bool|void
-     */
-    private function isAdmin()
-    {
-        // On vérifie si on est connecté et si "ROLE_ADMIN" est dans nos rôles
-        if ($this->session->get('user') !== null && in_array('ROLE_ADMIN', $_SESSION['user']['role'])) {
-            // On est admin
-            return true;
-        }
-
-        // On n'est pas admin
-        $this->session->set('error', 'You do not have access to this area');
-        $this->helper->redirect('main');
     }
 
     public function validComment(int $idComment)

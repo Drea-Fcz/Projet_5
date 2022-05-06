@@ -8,7 +8,8 @@ class Helper
      * simple page redirect
      * @param $page
      */
-    public function redirect($page) {
-        header('location: '. $page);
+    public function redirect($page)
+    {
+        header('location: ' . $page);
     }
 }

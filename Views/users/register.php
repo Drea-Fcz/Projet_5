@@ -1,7 +1,8 @@
-<?php if (!empty($_SESSION['error'])) :?>
+<?php if (!empty($_SESSION['error'])) : ?>
     <div class="d-flex justify-content-end">
         <div class="alert alert-danger alert-dismissible fade show mt-3" role="alert">
-            <?php echo $_SESSION['error']; unset($_SESSION['error']) ?>
+            <?php echo $_SESSION['error'];
+            unset($_SESSION['error']) ?>
             <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
         </div>
     </div>

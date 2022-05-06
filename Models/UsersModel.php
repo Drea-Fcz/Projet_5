@@ -13,10 +13,11 @@ class UsersModel extends Model
 
     public function __construct()
     {
-        $class = str_replace(__NAMESPACE__.'\\', '', __CLASS__);
+        $class = str_replace(__NAMESPACE__ . '\\', '', __CLASS__);
         $this->table = strtolower(str_replace('Model', '', $class));
 
     }
+
     /**
      * Récupérer un user à partir de son e-mail
      * @param string $email
@@ -142,7 +143,7 @@ class UsersModel extends Model
     public function getRole(): array
     {
         $role = $this->role;
-        $role[] ='ROLE_USER';
+        $role[] = 'ROLE_USER';
         return array_unique($role);
     }
 

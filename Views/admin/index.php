@@ -11,7 +11,9 @@
                     <div class="card-body">
                         <h4 class="card-title"><?= $post['post']->title ?></h4>
                         <hr>
-                            <p class="d-flex justify-content-between">Comments pending <span class="badge rounded-pill bg-dark text-white ml-auto"><?= $post['comments'] ?></span></p>
+                        <p class="d-flex justify-content-between">Comments pending <span
+                                    class="badge rounded-pill bg-dark text-white ml-auto"><?= $post['comments'] ?></span>
+                        </p>
                     </div>
                     <div class="d-flex justify-content-end">
                         <a href="admin/comments/<?= $post['post']->id ?>"

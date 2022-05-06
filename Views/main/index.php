@@ -4,7 +4,7 @@
             <div class="col-md-6 col-xs-12">
                 <div class="d-flex align-items-start flex-column">
                     <h2><span class="dot">A</span>udrey Facquez<span class="dot">.</span></h2>
-                    <h2 class="m-0 flex-row"> </h2>
+                    <h2 class="m-0 flex-row"></h2>
                     <span class="color mb-3">______</span>
                     <p class="m-0 small">Instagram | Linkedin</p>
                     <a class=" mt-4 bnt btn-outline-success btn-sm" href="public/assets/img/cv.pdf">Curiculum vitae</a>
@@ -34,7 +34,8 @@
                         <i>You can find all you want here</i>
                         <p class="mt-5">Lorem ipsum dolor sit amet, consectetur adipisicing elit.
                             Aspernatur assumenda dolorum enim mollitia nihil non quisquam, totam. Blanditiis
-                            consequatur consequuntur ducimus ipsum nam, necessitatibus nostrum perferendis quas qui rem! Unde.
+                            consequatur consequuntur ducimus ipsum nam, necessitatibus nostrum perferendis quas qui rem!
+                            Unde.
                             <br>
                         </p>
                         <div class="d-flex flex-row-reverse mb-3 col-12">

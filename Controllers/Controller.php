@@ -14,7 +14,6 @@ abstract class Controller
         // A partir de ce point toute sortie est conservée en mémoire
 
 
-
         require_once ROOT . '/Views/' . $file . '.php';
 
         // Transfère le buffer dans $content

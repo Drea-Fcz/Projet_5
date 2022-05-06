@@ -15,7 +15,7 @@ class PostsModel extends Model
 
     public function __construct()
     {
-        $class = str_replace(__NAMESPACE__.'\\', '', __CLASS__);
+        $class = str_replace(__NAMESPACE__ . '\\', '', __CLASS__);
         $this->table = strtolower(str_replace('Model', '', $class));
 
     }
@@ -167,7 +167,7 @@ class PostsModel extends Model
             $comments = $commentModel->findBy(
                 array(
                     'post_id' => $item->id,
-                    'is_valid'=> 0
+                    'is_valid' => 0
                 )
             );
             $data['post'] = $item;

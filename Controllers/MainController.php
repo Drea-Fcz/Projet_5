@@ -55,8 +55,8 @@ class MainController extends Controller
             $body = '
       <p>Vous avez une nouvelle demande d\'information</p>
        <p>Nom: ' . $firstname . ' ' . $lastname . '</p>
-       <p>Email : '. $email .'</p>
-       <p>Message : '. $message .'</p>
+       <p>Email : ' . $email . '</p>
+       <p>Message : ' . $message . '</p>
      ';
 
             $mail = new Mail();

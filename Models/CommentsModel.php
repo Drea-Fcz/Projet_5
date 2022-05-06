@@ -14,12 +14,13 @@ class CommentsModel extends Model
 
     public function __construct()
     {
-        $class = str_replace(__NAMESPACE__.'\\', '', __CLASS__);
+        $class = str_replace(__NAMESPACE__ . '\\', '', __CLASS__);
         $this->table = strtolower(str_replace('Model', '', $class));
 
     }
 
-    public function updateValidComment() {
+    public function updateValidComment()
+    {
         $this->update();
     }
 
@@ -141,9 +142,10 @@ class CommentsModel extends Model
      * @param $id
      * @return array|false
      */
-    public function findByPostId($id) {
+    public function findByPostId($id)
+    {
         $query = $this->request('SELECT * FROM comments c, users u 
-            WHERE c.post_id = '. $id . ' AND u.id = c.author_id AND c.is_valid = 1
+            WHERE c.post_id = ' . $id . ' AND u.id = c.author_id AND c.is_valid = 1
             ORDER BY c.comment_date DESC;');
 
         return $query->fetchAll();

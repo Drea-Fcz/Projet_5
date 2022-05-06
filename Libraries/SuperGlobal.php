@@ -14,6 +14,25 @@ class SuperGlobal
     {
         $this->define_superglobals();
     }
+
+    /**
+     * Function to define superglobals for use locally.
+     * We do not automatically unset the superglobals after
+     * defining them, since they might be used by other code.
+     *
+     * @return mixed
+     */
+    private function define_superglobals()
+    {
+
+        $this->_SERVER = (isset($_SERVER)) ? $_SERVER : null;
+        $this->_POST = (isset($_POST)) ? $_POST : null;
+        $this->_GET = (isset($_GET)) ? $_GET : null;
+        $this->_FILES = (isset($_FILES)) ? $_FILES : null;
+        $this->_SESSION = (isset($_SESSION)) ? $_SESSION : null;
+
+    }
+
     /**
      * Returns a key from the superglobal,
      * as it was at the time of instantiation.
@@ -29,6 +48,7 @@ class SuperGlobal
             return $this->_SERVER;
         }
     }
+
     /**
      * Returns a key from the superglobal,
      * as it was at the time of instantiation.
@@ -62,6 +82,7 @@ class SuperGlobal
             return $this->_GET;
         }
     }
+
     /**
      * Returns a key from the superglobal,
      * as it was at the time of instantiation.
@@ -93,24 +114,6 @@ class SuperGlobal
         } else {
             return $this->_FILES;
         }
-    }
-
-    /**
-     * Function to define superglobals for use locally.
-     * We do not automatically unset the superglobals after
-     * defining them, since they might be used by other code.
-     *
-     * @return mixed
-     */
-    private function define_superglobals()
-    {
-
-        $this->_SERVER = (isset($_SERVER)) ? $_SERVER : null;
-        $this->_POST = (isset($_POST)) ? $_POST : null;
-        $this->_GET = (isset($_GET)) ? $_GET : null;
-        $this->_FILES = (isset($_FILES)) ? $_FILES : null;
-        $this->_SESSION = (isset($_SESSION)) ? $_SESSION : null;
-
     }
 
     /**

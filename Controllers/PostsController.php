@@ -98,43 +98,27 @@ class PostsController extends Controller
         }
     }
 
-    public function postForm($chapo, $title, $body, $img): Form
+    /**
+     * @param string $comment
+     * @return Form
+     */
+    public function commentForm(string $comment): Form
     {
-        $form = new Form;
+        $form = new Form();
 
-        $form->startForm('post', '#', ['class' => 'text-white', 'enctype' => "multipart/form-data"])
-            ->startDiv(['class' => 'form-group mb-3'])
-            ->addLabelFor('chapo', 'Chapo :')
-            ->addInput('text', 'chapo', [
-                'id' => 'chapo',
-                'class' => 'form-control',
-                'value' => $chapo
+        $form->startForm('post', '#')
+            ->startDiv(['class' => 'd-flex justify-content-between'])
+            ->addInput('text', 'comment', [
+                'id' => 'comment',
+                'class' => 'form-control bg-input-comment text-white',
+                'value' => $comment,
+                'placeholder' => 'Leave a comment',
             ])
-            ->endDiv()
-            ->startDiv(['class' => 'form-group mb-3'])
-            ->addLabelFor('title', 'Title :')
-            ->addInput('text', 'title', [
-                'id' => 'titre',
-                'class' => 'form-control',
-                'value' => $title
+            ->addInput('submit', 'submit', [
+                'id' => 'submit',
+                'class' => 'btn btn-outline-success btn-small ms-3',
+                'value' => 'Send'
             ])
-            ->endDiv()
-            ->startDiv(['class' => 'form-group mb-3'])
-            ->addLabelFor('body', 'Body')
-            ->addTextarea('body', $body, ['id' => 'body', 'class' => 'form-control'])
-            ->endDiv()
-            ->startDiv(['class' => 'form-group mb-3'])
-            ->addLabelFor('img', 'Image :')
-            ->addInput('file', 'img', [
-                'id' => 'img',
-                'class' => 'form-control',
-                'accept' => 'image/png, image/jpeg, image/jpg',
-                'value' => $img
-            ])
-            ->endDiv()
-            ->startDiv(['class' => 'd-flex justify-content-end'])
-            ->addAnchorTag('../show', 'Cancel', ['class' => 'btn btn-outline-cancel me-3'])
-            ->addBouton('Submit', ['value' => 'Submit', 'class' => 'btn btn-outline-success'])
             ->endDiv()
             ->endForm();
 
@@ -200,6 +184,64 @@ class PostsController extends Controller
             $this->render('posts/add', ['form' => $form->create()]);
 
         }
+    }
+
+    public function saveImg($file)
+    {
+        // enregistrer l'image
+        if (isset($file['img']) && $file['img']['error'] == 0) {
+            if ($file['img']['size'] <= 2000000) {
+                $fileInfo = pathinfo($file['img']['name']);
+                $extension = $fileInfo['extension'];
+                $allowedExtensions = ['jpg', 'jpeg', 'gif', 'png'];
+                if (in_array($extension, $allowedExtensions)) {
+                    move_uploaded_file($file['img']['tmp_name'], '' . $this->global->get_SERVER('DOCUMENT_ROOT') . '/poo/public/assets/upload/' . basename($_FILES['img']['name']));
+                }
+            }
+        }
+    }
+
+    public function postForm($chapo, $title, $body, $img): Form
+    {
+        $form = new Form;
+
+        $form->startForm('post', '#', ['class' => 'text-white', 'enctype' => "multipart/form-data"])
+            ->startDiv(['class' => 'form-group mb-3'])
+            ->addLabelFor('chapo', 'Chapo :')
+            ->addInput('text', 'chapo', [
+                'id' => 'chapo',
+                'class' => 'form-control',
+                'value' => $chapo
+            ])
+            ->endDiv()
+            ->startDiv(['class' => 'form-group mb-3'])
+            ->addLabelFor('title', 'Title :')
+            ->addInput('text', 'title', [
+                'id' => 'titre',
+                'class' => 'form-control',
+                'value' => $title
+            ])
+            ->endDiv()
+            ->startDiv(['class' => 'form-group mb-3'])
+            ->addLabelFor('body', 'Body')
+            ->addTextarea('body', $body, ['id' => 'body', 'class' => 'form-control'])
+            ->endDiv()
+            ->startDiv(['class' => 'form-group mb-3'])
+            ->addLabelFor('img', 'Image :')
+            ->addInput('file', 'img', [
+                'id' => 'img',
+                'class' => 'form-control',
+                'accept' => 'image/png, image/jpeg, image/jpg',
+                'value' => $img
+            ])
+            ->endDiv()
+            ->startDiv(['class' => 'd-flex justify-content-end'])
+            ->addAnchorTag('../show', 'Cancel', ['class' => 'btn btn-outline-cancel me-3'])
+            ->addBouton('Submit', ['value' => 'Submit', 'class' => 'btn btn-outline-success'])
+            ->endDiv()
+            ->endForm();
+
+        return $form;
     }
 
     /**
@@ -272,49 +314,6 @@ class PostsController extends Controller
             $this->session->set('error', 'You must be logged in to access this page');
             $this->helper->redirect('users/login');
         }
-    }
-
-
-    public function saveImg($file)
-    {
-        // enregistrer l'image
-        if (isset($file['img']) && $file['img']['error'] == 0) {
-            if ($file['img']['size'] <= 2000000) {
-                $fileInfo = pathinfo($file['img']['name']);
-                $extension = $fileInfo['extension'];
-                $allowedExtensions = ['jpg', 'jpeg', 'gif', 'png'];
-                if (in_array($extension, $allowedExtensions)) {
-                    move_uploaded_file($file['img']['tmp_name'], '' . $this->global->get_SERVER('DOCUMENT_ROOT') . '/poo/public/assets/upload/' . basename($_FILES['img']['name']));
-                }
-            }
-        }
-    }
-
-    /**
-     * @param string $comment
-     * @return Form
-     */
-    public function commentForm(string $comment): Form
-    {
-        $form = new Form();
-
-        $form->startForm('post', '#')
-            ->startDiv(['class' => 'd-flex justify-content-between'])
-            ->addInput('text', 'comment', [
-                'id' => 'comment',
-                'class' => 'form-control bg-input-comment text-white',
-                'value' => $comment,
-                'placeholder' => 'Leave a comment',
-            ])
-            ->addInput('submit', 'submit', [
-                'id' => 'submit',
-                'class' => 'btn btn-outline-success btn-small ms-3',
-                'value' => 'Send'
-            ])
-            ->endDiv()
-            ->endForm();
-
-        return $form;
     }
 
     /**
