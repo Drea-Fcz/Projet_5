@@ -15,6 +15,7 @@ class Model extends Db
 
 
     /**
+     *  le prepare est executé dans la methode request
      * @return array|false
      */
     public function findAll()
@@ -53,7 +54,7 @@ class Model extends Db
      */
     public function find(int $id)
     {
-        return $this->request('SELECT * FROM '. $this->table .' WHERE id = ' . $id)->fetch();
+        return $this->request("SELECT * FROM {$this->table} WHERE id = ?", [$id])->fetch();
     }
 
     /**
