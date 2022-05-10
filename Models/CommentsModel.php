@@ -4,13 +4,13 @@ namespace App\Models;
 
 class CommentsModel extends Model
 {
-    private $id;
-    private $comment;
-    private $post_id;
-    private $comment_date;
-    private $is_valid;
-    private $author_id;
-    private $author_name;
+    protected $id;
+    protected $comment;
+    protected $post_id;
+    protected $comment_date;
+    protected $is_valid;
+    protected $author_id;
+    protected $author_name;
 
 
     public function __construct()

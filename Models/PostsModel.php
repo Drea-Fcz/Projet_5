@@ -7,42 +7,42 @@ class PostsModel extends Model
     /**
      * @var
      */
-    private $id;
+    protected $id;
 
     /**
      * @var
      */
-    private $chapo;
+    protected $chapo;
 
     /**
      * @var
      */
-    private $title;
+    protected $title;
 
     /**
      * @var
      */
-    private $body;
+    protected $body;
 
     /**
      * @var
      */
-    private $img;
+    protected $img;
 
     /**
      * @var
      */
-    private $created_at;
+    protected $created_at;
 
     /**
      * @var
      */
-    private $user_id;
+    protected $user_id;
 
     /**
      * @var
      */
-    private $author;
+    protected $author;
 
     public function __construct()
     {

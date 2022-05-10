@@ -8,11 +8,11 @@ const DB_HOST = 'localhost';
 /**
  * db user
  */
-const DB_USER = '###';
+const DB_USER = 'root';
 /**
  *db pass
  */
-const DB_PASS = '####';
+const DB_PASS = 'root';
 /**
  * db name
  */
@@ -21,15 +21,15 @@ const DB_NAME = 'OcBlog';
 /**
  * mailer host
  */
-const MAIL_HOST = 'smtp.example.com';
+const MAIL_HOST = 'smtp.gmail.com';
 /**
  * mailer user
  */
-const MAIL_USER = 'example@gmail.com';
+const MAIL_USER = 'audrey.openclassroom@gmail.com';
 /**
  * mailer pass
  */
-const MAIL_PASS = '####';
+const MAIL_PASS = 'OpenClassroom2022';
 
 /**
  *URL Root
