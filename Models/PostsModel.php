@@ -4,14 +4,45 @@ namespace App\Models;
 
 class PostsModel extends Model
 {
-    protected $id;
-    protected $chapo;
-    protected $title;
-    protected $body;
-    protected $img;
-    protected $created_at;
-    protected $user_id;
+    /**
+     * @var
+     */
+    private $id;
 
+    /**
+     * @var
+     */
+    private $chapo;
+
+    /**
+     * @var
+     */
+    private $title;
+
+    /**
+     * @var
+     */
+    private $body;
+
+    /**
+     * @var
+     */
+    private $img;
+
+    /**
+     * @var
+     */
+    private $created_at;
+
+    /**
+     * @var
+     */
+    private $user_id;
+
+    /**
+     * @var
+     */
+    private $author;
 
     public function __construct()
     {
@@ -140,19 +171,32 @@ class PostsModel extends Model
     }
 
     /**
+     * @return mixed
+     */
+    public function getAuthor()
+    {
+        return $this->author;
+    }
+
+    /**
+     * @param mixed $author
+     */
+    public function setAuthor($author): PostsModel
+    {
+        $this->author = $author;
+        return $this;
+    }
+
+    /**
      * @return array|false
      */
     public function FindAllByDESC()
     {
-        $query = $this->request('SELECT *,  posts.id as postId, 
-                                users.id as userId,
-                                posts.created_at as postCreated,
-                                users.created_at as userCreated
+        $query = $this->request('SELECT *
                                FROM ' . $this->table . '
-                               LEFT  JOIN  users ON posts.user_id = users.id
                                ORDER BY posts.created_at DESC');
 
-        return $query->fetchAll();
+        return $query->fetchAll(\PDO::FETCH_CLASS, __CLASS__);
     }
 
     /**

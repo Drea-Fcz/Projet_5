@@ -40,12 +40,12 @@
                     <div class="card comment_dark mb-3">
                         <div class="container mt-1">
                             <div class="d-flex justify-content-between px-1">
-                                <b class="color text-capitalize small"><?= $comment->name ?> </b>
-                                <i class="ms-3 small">created at <?= $comment->comment_date ?></i>
+                                <b class="color text-capitalize small"><?= $comment->getAuthorName() ?> </b>
+                                <i class="ms-3 small">created at <?= $comment->getCommentDate() ?></i>
                             </div>
                             <div class="container mt-3">
                                 <p class="d-flex justify-content-start">
-                                    <?= $comment->comment ?>
+                                    <?= $comment->getComment() ?>
                                 </p>
                             </div>
                         </div>

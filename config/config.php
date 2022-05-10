@@ -12,7 +12,7 @@ const DB_USER = 'root';
 /**
  *db pass
  */
-const DB_PASS = 'root';
+const DB_PASS = '####';
 /**
  * db name
  */
@@ -21,15 +21,15 @@ const DB_NAME = 'OcBlog';
 /**
  * mailer host
  */
-const MAIL_HOST = 'smtp.gmail.com';
+const MAIL_HOST = 'smtp.example.com';
 /**
  * mailer user
  */
-const MAIL_USER = 'audrey.openclassroom@gmail.com';
+const MAIL_USER = 'example@gmail.com';
 /**
  * mailer pass
  */
-const MAIL_PASS = 'OpenClassroom2022';
+const MAIL_PASS = '####';
 
 /**
  *URL Root

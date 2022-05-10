@@ -74,6 +74,7 @@ class PostsController extends Controller
                 $comment->setComment($postComment)
                     ->setIsValid(0)
                     ->setPostId($idPost)
+                    ->setAuthorName($this->session->get('user')['name'])
                     ->setAuthorId($this->session->get('user')['id']);
 
                 // On enregistre
@@ -158,6 +159,7 @@ class PostsController extends Controller
                     ->setTitle($title)
                     ->setBody($body)
                     ->setImg($img)
+                    ->setAuthor($this->session->get('user')['name'])
                     ->setUserId($this->session->get('user')['id']);
 
                 // On enregistre

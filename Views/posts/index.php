@@ -21,21 +21,21 @@
             <div class="col-sm-12 col-md-4 mb-3">
                 <div class="bg-dark post card">
                     <div class="ps-4 pt-2">
-                        <h6 class="card-title text-secondary text-uppercase"><?= $post->chapo ?></h6>
+                        <h6 class="card-title text-secondary text-uppercase"><?= $post->getChapo() ?></h6>
                     </div>
-                    <img src="assets/upload/<?= htmlspecialchars_decode($post->img) ?>" alt="photo"
+                   <img src="assets/upload/<?= htmlspecialchars_decode($post->getImg()) ?>" alt="photo"
                          class="card-img-top d-flex align-item-center img-post p-2">
                     <div class="card-body text-white">
-                        <h4 class="card-title"><?= $post->title ?></h4>
+                        <h4 class="card-title"><?= $post->getTitle() ?></h4>
                         <div class="color small mb-3">
-                            written by <?= $post->name ?> <?= $post->postCreated ?>
+                            written by <?= $post->getAuthor() ?> <?= $post->getCreatedAt() ?>
                         </div>
                         <p class="card-text scrollable pb-4">
-                            <?= substr($post->body, 0, 249) ?> ...
+                            <?= substr($post->getBody(), 0, 249) ?> ...
                         </p>
                     </div>
                     <div class="d-flex justify-content-end">
-                        <a href="posts/show/<?= htmlspecialchars_decode($post->postId) ?>"
+                        <a href="posts/show/<?= htmlspecialchars_decode($post->getId()) ?>"
                            class="btn btn-card m-4">Read more</a>
                     </div>
                 </div>

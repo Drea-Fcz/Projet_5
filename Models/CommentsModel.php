@@ -4,12 +4,13 @@ namespace App\Models;
 
 class CommentsModel extends Model
 {
-    protected $id;
-    protected $comment;
-    protected $post_id;
-    protected $comment_date;
-    protected $is_valid;
-    protected $author_id;
+    private $id;
+    private $comment;
+    private $post_id;
+    private $comment_date;
+    private $is_valid;
+    private $author_id;
+    private $author_name;
 
 
     public function __construct()
@@ -139,6 +140,25 @@ class CommentsModel extends Model
     }
 
     /**
+     * @return mixed
+     */
+    public function getAuthorName()
+    {
+        return $this->author_name;
+    }
+
+
+    /**
+     * @param $author_name
+     * @return $this
+     */
+    public function setAuthorName($author_name): CommentsModel
+    {
+        $this->author_name = $author_name;
+        return $this;
+    }
+
+    /**
      * @param $id
      * @return array|false
      */
@@ -148,6 +168,6 @@ class CommentsModel extends Model
             WHERE c.post_id = ' . $id . ' AND u.id = c.author_id AND c.is_valid = 1
             ORDER BY c.comment_date DESC;');
 
-        return $query->fetchAll();
+        return $query->fetchAll(\PDO::FETCH_CLASS, __CLASS__);
     }
 }
