@@ -8,7 +8,7 @@ const DB_HOST = 'localhost';
 /**
  * db user
  */
-const DB_USER = 'root';
+const DB_USER = '###';
 /**
  *db pass
  */
