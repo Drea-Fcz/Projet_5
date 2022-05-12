@@ -5,12 +5,12 @@
     <div class="card bg-dark p-4">
         <div class="container">
             <div class="d-flex justify-content-center mx-5">
-                <img src="../../public/assets/upload/<?= htmlspecialchars_decode($post->img) ?>" alt="gravity"
+                <img src="../../public/assets/upload/<?= htmlspecialchars_decode($post->getImg()) ?>" alt="gravity"
                      class="img-fluid p-2">
             </div>
             <div class="show-content">
                 <div class="d-flex justify-content-between">
-                    <h1><?= $post->title ?></h1>
+                    <h1><?= $post->getTitle() ?></h1>
                     <?php if (isset($_SESSION['user']['role']) && in_array('ROLE_ADMIN', $_SESSION['user']['role'])) : ?>
                         <div class="d-flex flex-row">
                             <a href="<?= URL ?>/posts/edit/<?= htmlspecialchars_decode($idPost) ?>"
@@ -27,7 +27,7 @@
                     <?php endif; ?>
                 </div>
                 <p>
-                    <?= $post->body ?>
+                    <?= $post->getBody() ?>
                 </p>
                 <h6 class="text-uppercase">Comments : </h6>
                 <?php if (isset($_SESSION['user']) && !empty($_SESSION['user']['id']) !== null) : ?>
